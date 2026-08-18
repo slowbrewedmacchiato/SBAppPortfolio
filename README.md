@@ -125,13 +125,13 @@ API reference: [slowbrewedmacchiato.github.io/SBAppPortfolio](https://slowbrewed
 
 Contributing: [CONTRIBUTING.md](CONTRIBUTING.md). Security issues: [SECURITY.md](SECURITY.md).
 
-Generate DocC documentation (maintainers):
+The published site is built and deployed by CI. To preview it locally before opening a PR:
 
 ```bash
 SBAPP_PORTFOLIO_DEVELOPMENT=1 swift package generate-documentation
 ```
 
-The `swift-docc-plugin` dependency is env-gated (`SBAPP_PORTFOLIO_DEVELOPMENT`) so it does not propagate into consumers' package graphs.
+`swift-docc-plugin` is gated behind `SBAPP_PORTFOLIO_DEVELOPMENT` so it stays out of consumers' package graphs. Set the variable to opt in; CI sets it for the documentation job.
 
 ## License
 
