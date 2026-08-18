@@ -1,18 +1,19 @@
-# Thicket — SBAppPortfolio example
+# Thicket: an SBAppPortfolio example
 
 A small, fictional iOS app that integrates `SBAppPortfolio` the way a real app would: a themed settings screen with a "More From Us" row that presents the portfolio sheet.
 
 ## Running it
 
-Open `Thicket.xcodeproj` and run. The project references the package by local path (`.package(path: "..")`), so it always builds against the working copy — no version pinning, no network fetch.
+Open `Thicket.xcodeproj` and run. The project references the package by local path (`.package(path: "..")`), so it always builds against the working copy. No version pinning, no network fetch.
 
 ## What it demonstrates
 
-- **The general API** — "More From Us" builds an `SBAppPortfolioConfiguration` with its own catalog. This is the path most adopters take.
-- **The built-in convenience** — "More From Slow Brewed" uses `.slowBrewed(currentAppID:)`, a one-liner for Slow Brewed apps.
-- **Host theming** — Thicket has its own palette and SF Pro Rounded type. The package renders neutrally, so the sheet inherits the host's `tint` without any theming API.
-- **Light and dark** — the in-app Appearance picker switches modes without leaving the screen.
-- **Self-exclusion** — Thicket passes an App Store ID that matches nothing in the catalog, so every app stays visible. A shipping app passes its own ID and the package filters it out.
+- **The general API**: "More From Us" builds an `SBAppPortfolioConfiguration` with its own catalog. This is the path most adopters take.
+- **The built-in convenience**: "More From Slow Brewed" uses `.slowBrewed(currentAppID:)`, a one-liner for Slow Brewed apps.
+- **Host theming**: Thicket has its own palette and SF Pro Rounded type. The package renders neutrally, so the sheet inherits the host's `tint` without any theming API.
+- **Light and dark**: the in-app Appearance picker switches modes without leaving the screen.
+- **Self-exclusion**: Thicket passes an App Store ID that matches nothing in the catalog, so every app stays visible. A shipping app passes its own ID and the package filters it out.
+- **Localization**: Thicket ships its own `Localizable.xcstrings` in the same eight locales as the package, so switching the simulator's language localizes both the host screen and the sheet.
 
 The App Store IDs are real, so the sheet renders live metadata. Placeholder IDs would return no results from the iTunes Lookup API and the sheet would show its empty state.
 
@@ -23,3 +24,5 @@ The App Store IDs are real, so the sheet renders live metadata. Placeholder IDs 
 ```bash
 cd Example && xcodegen generate
 ```
+
+If you add strings to the app, keep `SWIFT_EMIT_LOC_STRINGS: YES` in `project.yml`. Without it Xcode never extracts `String(localized:)` keys from Swift, and every key in the catalog shows as **stale** in the String Catalog editor even though the translations are present and compile correctly.
