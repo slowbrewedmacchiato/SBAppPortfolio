@@ -1,5 +1,10 @@
 # SBAppPortfolio
 
+[![CI](https://github.com/slowbrewed/SBAppPortfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/slowbrewed/SBAppPortfolio/actions/workflows/ci.yml)
+[![Swift 6.0](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
+[![Platforms](https://img.shields.io/badge/platforms-iOS%2018%20%7C%20macOS%2013-blue.svg)](https://developer.apple.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 A SwiftUI "More From Us" sheet for iOS apps. Shows your studio's other apps with live App Store metadata, fetched from the iTunes Lookup API, cached for one hour, and rendered in a neutral, themeable UI.
 
 Built for indie developers who ship multiple apps and want a drop-in cross-sell surface without rebuilding the same sheet in every project.
