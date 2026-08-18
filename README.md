@@ -9,7 +9,7 @@
 
 Your users already trust you. This is the screen that tells them what else you make: a settings sheet listing your other apps with their real icons, names, subtitles, and prices, pulled live from the App Store so nothing goes stale when you rename an app or change a price.
 
-The app it runs in excludes itself. The sheet inherits your app's tint instead of imposing its own look. It ships in eight languages and depends on nothing.
+The app it runs in excludes itself. The sheet inherits your app's tint instead of imposing its own look. It ships localized and depends on nothing.
 
 Extracted from six Slow Brewed apps that had each grown their own copy of this screen.
 
@@ -67,7 +67,7 @@ The sheet fetches live metadata (icon, name, subtitle, price, genre) for every a
 - **Configurable storefront**: pass `lookupCountry` (ISO code) so users in non-US regions see localized metadata and prices
 - **Locale-independent free-app detection**: uses the numeric `price` field, not the localized `formattedPrice` string, so the GET pill renders correctly in every storefront
 - **Resilient decoding**: a malformed entry in the lookup response is dropped, not propagated; one bad sibling app doesn't blank the sheet
-- **Bundled localization**: `Localizable.xcstrings` with 8 locales (en, de, es, fr, ja, ko, pt-BR, zh-Hans)
+- **Bundled localization**: translations ship inside the package, so a host app gets them with no setup
 - **Neutral SwiftUI**: system semantic colors and SF Symbols; apply your own theme via standard view modifiers
 - **Swift Testing**: mock JSON fixtures covering parsing, configuration, cache behavior, and error mapping
 
@@ -112,7 +112,9 @@ The sheet renders in neutral SwiftUI, system semantic colors (`Color.primary`, `
 
 ## Localization
 
-The package ships `Localizable.xcstrings` with eight locales. Strings used by the sheet resolve from the package's own bundle (`bundle: .module`), so no host-side string copying is needed. To add a locale, extend the package's `Localizable.xcstrings` and submit a PR.
+The package ships `Localizable.xcstrings`, currently covering en, de, es, fr, ja, ko, pt-BR, and zh-Hans. Strings used by the sheet resolve from the package's own bundle (`bundle: .module`), so no host-side string copying is needed.
+
+To add a locale, extend `Localizable.xcstrings` and open a PR. CI fails the build if any key is missing a translation, or carries an empty one, in a locale the catalog declares.
 
 ## Documentation
 

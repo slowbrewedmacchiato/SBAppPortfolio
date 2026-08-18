@@ -77,7 +77,7 @@ The sheet renders in neutral SwiftUI, system semantic colors and SF Symbols. App
 
 ## Localization
 
-The package ships `Localizable.xcstrings` with eight locales: en, de, es, fr, ja, ko, pt-BR, zh-Hans. Strings used by the sheet resolve from the package's own bundle, so no host-side string copying is needed. To add a locale, extend the package's `Localizable.xcstrings` and submit a PR.
+The package ships `Localizable.xcstrings` covering several locales; the current list is in the README. Strings used by the sheet resolve from the package's own bundle, so no host-side string copying is needed.
 
 ## Testing
 

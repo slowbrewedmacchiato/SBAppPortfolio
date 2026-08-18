@@ -13,7 +13,7 @@ Open `Thicket.xcodeproj` and run. The project references the package by local pa
 - **Host theming**: Thicket has its own palette and SF Pro Rounded type. The package renders neutrally, so the sheet inherits the host's `tint` without any theming API.
 - **Light and dark**: the in-app Appearance picker switches modes without leaving the screen.
 - **Self-exclusion**: Thicket passes an App Store ID that matches nothing in the catalog, so every app stays visible. A shipping app passes its own ID and the package filters it out.
-- **Localization**: Thicket ships its own `Localizable.xcstrings` in the same eight locales as the package, so switching the simulator's language localizes both the host screen and the sheet.
+- **Localization**: Thicket ships its own `Localizable.xcstrings` in the same locales as the package, so switching the simulator's language localizes both the host screen and the sheet.
 
 The App Store IDs are real, so the sheet renders live metadata. Placeholder IDs would return no results from the iTunes Lookup API and the sheet would show its empty state.
 
