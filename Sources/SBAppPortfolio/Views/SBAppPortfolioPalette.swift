@@ -28,6 +28,16 @@ extension Color {
         #endif
     }
 
+    /// Fill behind the GET / price action pill, matching the App Store's
+    /// neutral capsule. Pairs with tinted text supplied by the host.
+    static var portfolioActionPill: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .tertiarySystemFill)
+        #else
+        Color(nsColor: .quaternaryLabelColor).opacity(0.5)
+        #endif
+    }
+
     /// Hairline separator stroke.
     static var portfolioHairline: Color {
         #if canImport(UIKit)

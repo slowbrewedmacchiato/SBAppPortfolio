@@ -33,3 +33,6 @@ INTERNAL_README.md
 
 # Claude Code local config
 .claude/
+
+# Example app: commit the generated project so the demo runs on clone
+!Example/Thicket.xcodeproj

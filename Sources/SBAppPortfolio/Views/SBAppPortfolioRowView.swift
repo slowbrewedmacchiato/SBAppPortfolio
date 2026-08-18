@@ -48,14 +48,18 @@ struct SBAppPortfolioRowView: View {
 
                         Spacer(minLength: 8)
 
+                        // Matches the App Store's own action pill: a filled
+                        // neutral capsule with bold tinted text. Using `.tint`
+                        // keeps the package theme-neutral — the pill adopts
+                        // whatever accent the host applies to the sheet.
                         Text(app.isFree
                             ? String(localized: "GET", bundle: .module, comment: "Portfolio row action label for free apps.")
                             : app.displayPrice)
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.primary)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 5)
-                            .background(Capsule().stroke(Color.portfolioHairline, lineWidth: 1))
+                            .font(.caption.weight(.bold))
+                            .foregroundStyle(.tint)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 6)
+                            .background(Capsule().fill(Color.portfolioActionPill))
                     }
 
                     Text(app.displaySubtitle)

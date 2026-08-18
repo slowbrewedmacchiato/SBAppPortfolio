@@ -40,8 +40,14 @@ public struct SBAppStoreApp: Codable, Identifiable, Sendable {
     /// `price` field (0 for free apps) rather than the localized
     /// `formattedPrice` string ("Free" / "Gratis" / "無料" / etc.), so the
     /// GET pill renders correctly regardless of `lookupCountry`.
+    ///
+    /// Some App Store entries omit `price` *and* `formattedPrice` entirely.
+    /// A paid app always reports a price, so an entry carrying no price data
+    /// at all is treated as free — otherwise it would render the word "Free"
+    /// beside GET pills for its equally-free siblings in the same list.
     public var isFree: Bool {
-        price == 0
+        if let price { return price == 0 }
+        return formattedPrice == nil
     }
 
     /// Prefers the censored name (used by the App Store in some regions) over

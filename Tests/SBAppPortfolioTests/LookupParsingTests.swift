@@ -155,6 +155,21 @@ struct LookupParsingTests {
         #expect(app.displayPrice == "0,99 €")
     }
 
+    @Test("Entry with no price data at all is treated as free")
+    func noPriceDataIsFree() throws {
+        // Real case: the App Store returns neither `price` nor `formattedPrice`
+        // for some free apps. Without this, such an app renders the word "Free"
+        // next to GET pills for its siblings in the same list.
+        let json = """
+        {"resultCount":1,"results":[{"trackId":1,"trackName":"X","description":"d","artworkUrl100":"a","trackViewUrl":"u","artistName":"a"}]}
+        """.data(using: .utf8)!
+        let response = try JSONDecoder().decode(SBAppStoreLookupResponse.self, from: json)
+        let app = try #require(response.results.first)
+        #expect(app.price == nil)
+        #expect(app.formattedPrice == nil)
+        #expect(app.isFree)
+    }
+
     @Test("Missing price falls back to showing formattedPrice rather than GET pill")
     func missingPriceShowsFormattedPrice() throws {
         // When `price` is absent from the response we cannot be sure the app

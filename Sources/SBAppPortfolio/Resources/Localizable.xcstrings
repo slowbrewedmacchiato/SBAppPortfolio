@@ -1,1172 +1,1172 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "More From Us": {
-      "comment": "Developer showcase sheet title.\nSettings row title for developer showcase sheet.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mehr von uns"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "App" : {
+      "comment" : "Fallback genre label for portfolio rows.\nFallback name label when App Store lookup omits track name.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "More From Us"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Más de nosotros"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Plus de créations de notre part"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "その他の提供"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリ"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "제공자 정보 더보기"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mais de nós"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "更多来自我们"
-          }
-        }
-      }
-    },
-    "Our Apps": {
-      "comment": "Developer showcase section header.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unsere Apps"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Our Apps"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nuestras apps"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nos apps"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "当社のアプリ"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "앱"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nossos apps"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "我们的应用"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用"
           }
         }
       }
     },
-    "Discover our other apps": {
-      "comment": "Developer showcase section footer.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Entdecke unsere anderen Apps"
+    "App Store request failed with code %lld" : {
+      "comment" : "Portfolio lookup HTTP error.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App‑Store‑Anfrage ist mit dem Code %lld fehlgeschlagen"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Discover our other apps"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store request failed with code %lld"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Descubre nuestras otras apps"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La solicitud a App Store falló con el código %lld"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Découvrez nos autres apps"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La requête App Store a échoué avec le code %lld"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "他のアプリもご覧ください"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store のリクエストがエラーコード %lld で失敗しました"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "다른 앱을 확인해 보세요"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store 요청이 코드 %lld로 실패했습니다"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conheça nossos outros apps"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requisição à App Store falhou com código %lld"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "发现我们的其他应用"
-          }
-        }
-      }
-    },
-    "View All Our Apps": {
-      "comment": "Developer showcase footer button title.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alle unsere Apps ansehen"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "View All Our Apps"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ver todas nuestras apps"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voir toutes nos apps"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "当社のすべてのアプリを見る"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "저희의 모든 앱 보기"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ver todos os nossos apps"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "查看我们的所有应用"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store 请求失败，错误代码 %lld"
           }
         }
       }
     },
-    "Browse our complete collection on the App Store": {
-      "comment": "Developer showcase footer button subtitle.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Durchsuche unsere komplette Sammlung im App Store"
+    "Browse our complete collection on the App Store" : {
+      "comment" : "Portfolio developer page button subtitle.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchsuche unsere komplette Sammlung im App Store"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Browse our complete collection on the App Store"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Browse our complete collection on the App Store"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Explora nuestra colección completa en el App Store"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explora nuestra colección completa en el App Store"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Parcourez notre collection complète sur l'App Store"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcourez notre collection complète sur l'App Store"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Storeで当社のすべてのコレクションを閲覧する"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Storeで当社のすべてのコレクションを閲覧する"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store에서 전체 컬렉션을 둘러보세요"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store에서 전체 컬렉션을 둘러보세요"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Confira nossa coleção completa na App Store"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confira nossa coleção completa na App Store"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在 App Store 浏览我们的完整合集"
-          }
-        }
-      }
-    },
-    "Unable to load apps": {
-      "comment": "Developer showcase error title.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apps konnten nicht geladen werden"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unable to load apps"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No se pueden cargar las apps"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Impossible de charger les apps"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アプリを読み込めませんでした"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "앱을 불러올 수 없습니다."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Não foi possível carregar os apps"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无法加载应用"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 App Store 浏览我们的完整合集"
           }
         }
       }
     },
-    "Try Again": {
-      "comment": "Button title that retries loading Manage Apps.\nButton title that retries loading a failed screen.\nDeveloper showcase retry button.\nPrimary button that retries the sales report download from the no-reports banner.\nRetry button title for workspace picker load failure.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nochmals versuchen"
+    "Couldn't refresh. Showing your last saved apps." : {
+      "comment" : "Portfolio refresh-failure banner shown when a pull-to-refresh fails but stale content remains.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualisierung fehlgeschlagen. Zuletzt gespeicherte Apps werden angezeigt."
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Try Again"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't refresh. Showing your last saved apps."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Intentar de nuevo"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo actualizar. Se muestran las últimas apps guardadas."
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réessayer"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec de l'actualisation. Affichage des dernières apps enregistrées."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "再試行する"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新できませんでした。前回保存したAppを表示しています。"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "다시 시도"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새로 고칠 수 없습니다. 마지막으로 저장된 앱을 표시합니다."
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tentar Novamente"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível atualizar. Exibindo os últimos apps salvos."
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "重试"
-          }
-        }
-      }
-    },
-    "No apps available": {
-      "comment": "Developer showcase empty state title.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Keine Apps verfügbar"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No apps available"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No hay apps disponibles"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aucune application disponible"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "利用可能なアプリがありません"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "사용 가능한 앱이 없습니다"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nenhum app disponível"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "暂无可用应用"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法刷新。正在显示上次保存的 App。"
           }
         }
       }
     },
-    "Our apps will appear here when available.": {
-      "comment": "Developer showcase empty state message.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unsere Apps werden hier angezeigt, sobald sie verfügbar sind."
+    "Discover our other apps" : {
+      "comment" : "Portfolio section footer.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entdecke unsere anderen Apps"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Our apps will appear here when available."
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discover our other apps"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nuestras apps aparecerán aquí cuando estén disponibles."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descubre nuestras otras apps"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nos apps apparaîtront ici lorsqu’elles seront disponibles."
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Découvrez nos autres apps"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "利用可能になり次第、ここに当社のアプリが表示されます。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "他のアプリもご覧ください"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "앱이 이용 가능해지면 여기에 표시됩니다."
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다른 앱을 확인해 보세요"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nossos apps aparecerão aqui quando estiverem disponíveis."
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conheça nossos outros apps"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "我们的应用将在可用时显示在此处。"
-          }
-        }
-      }
-    },
-    "GET": {
-      "comment": "Developer showcase row action label for free apps.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "LADEN"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GET"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OBTENER"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OBTENIR"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GET"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GET"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OBTER"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "获取"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发现我们的其他应用"
           }
         }
       }
     },
-    "Free": {
-      "comment": "Fallback price label when App Store lookup omits formatted price.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kostenlos"
+    "Done" : {
+      "comment" : "Portfolio sheet close button.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Free"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gratis"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listo"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gratuit"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminé"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無料"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "무료"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Grátis"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concluído"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "免费"
-          }
-        }
-      }
-    },
-    "App": {
-      "comment": "Chart grouping label for app.\nFallback genre label for developer showcase rows.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アプリ"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "앱"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "应用"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
           }
         }
       }
     },
-    "Invalid App Store URL": {
-      "comment": "Developer showcase lookup error.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ungültige App‑Store‑URL"
+    "Failed to parse App Store data" : {
+      "comment" : "Portfolio lookup error.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store‑Daten konnten nicht analysiert werden"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Invalid App Store URL"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to parse App Store data"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URL de App Store no válida"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error al analizar los datos de App Store"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URL de l'App Store invalide"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible d’analyser les données App Store"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無効なApp StoreのURL"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store のデータの解析に失敗しました"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "유효하지 않은 App Store URL"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store 데이터를 분석하지 못했습니다"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URL da App Store inválida"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falha ao analisar dados da App Store"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无效的 App Store 链接"
-          }
-        }
-      }
-    },
-    "Invalid response from App Store": {
-      "comment": "Developer showcase lookup error.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ungültige Antwort vom App Store"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Invalid response from App Store"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Respuesta no válida del App Store"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réponse invalide de l'App Store"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Storeからの無効な応答"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store로부터의 유효하지 않은 응답"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Resposta inválida da App Store"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "来自 App Store 的无效响应"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解析 App Store 数据失败"
           }
         }
       }
     },
-    "App Store request failed with code %lld": {
-      "comment": "Developer showcase lookup HTTP error.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App‑Store‑Anfrage ist mit dem Code %lld fehlgeschlagen"
+    "Free" : {
+      "comment" : "Fallback price label when App Store lookup omits formatted price.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kostenlos"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store request failed with code %lld"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La solicitud a App Store falló con el código %lld"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gratis"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La requête App Store a échoué avec le code %lld"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gratuit"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store のリクエストがエラーコード %lld で失敗しました"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無料"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store 요청이 코드 %lld로 실패했습니다"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "무료"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Requisição à App Store falhou com código %lld"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grátis"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store 请求失败，错误代码 %lld"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免费"
           }
         }
       }
     },
-    "Failed to parse App Store data": {
-      "comment": "Developer showcase lookup error.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store‑Daten konnten nicht analysiert werden"
+    "GET" : {
+      "comment" : "Portfolio row action label for free apps.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LADEN"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Failed to parse App Store data"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GET"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Error al analizar los datos de App Store"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OBTENER"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Impossible d’analyser les données App Store"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OBTENIR"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store のデータの解析に失敗しました"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GET"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store 데이터를 분석하지 못했습니다"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GET"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Falha ao analisar dados da App Store"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OBTER"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "解析 App Store 数据失败"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取"
           }
         }
       }
     },
-    "Network error: %@": {
-      "comment": "Developer showcase lookup network error.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Netzwerkfehler: %@"
+    "Invalid App Store URL" : {
+      "comment" : "Portfolio lookup error.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültige App‑Store‑URL"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Network error: %@"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid App Store URL"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Error de red: %@"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL de App Store no válida"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Erreur réseau : %@"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL de l'App Store invalide"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ネットワークエラー: %@"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無効なApp StoreのURL"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "네트워크 오류: %@"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "유효하지 않은 App Store URL"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Erro de rede: %@"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL da App Store inválida"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "网络错误：%@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无效的 App Store 链接"
           }
         }
       }
     },
-    "Request was cancelled": {
-      "comment": "Developer showcase lookup error.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Anfrage wurde abgebrochen"
+    "Invalid response from App Store" : {
+      "comment" : "Portfolio lookup error.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültige Antwort vom App Store"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Request was cancelled"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid response from App Store"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La solicitud fue cancelada"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respuesta no válida del App Store"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La requête a été annulée"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réponse invalide de l'App Store"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "リクエストがキャンセルされました"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Storeからの無効な応答"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "요청이 취소되었습니다"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store로부터의 유효하지 않은 응답"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A solicitação foi cancelada"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resposta inválida da App Store"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请求已取消"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来自 App Store 的无效响应"
           }
         }
       }
     },
-    "Open %@ on the App Store": {
-      "comment": "Accessibility label for a developer showcase app row.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ im App Store öffnen"
+    "More From Us" : {
+      "comment" : "Portfolio sheet title.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mehr von uns"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open %@ on the App Store"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More From Us"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abrir %@ en el App Store"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más de nosotros"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ouvrir %@ sur l’App Store"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus de créations de notre part"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Storeで%@を開く"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その他の提供"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App Store에서 %@ 열기"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제공자 정보 더보기"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abrir %@ na App Store"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais de nós"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在 App Store 打开 %@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更多来自我们"
           }
         }
       }
     },
-    "Done": {
-      "comment": "Keyboard toolbar button that dismisses the keyboard.",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fertig"
+    "Network error: %@" : {
+      "comment" : "Portfolio lookup network error.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netzwerkfehler: %@"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Network error: %@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Listo"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error de red: %@"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Terminé"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur réseau : %@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "完了"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ネットワークエラー: %@"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "완료"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "네트워크 오류: %@"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Concluído"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro de rede: %@"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "完成"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络错误：%@"
           }
         }
       }
     },
-    "Couldn't refresh — showing last saved apps": {
-      "comment": "Portfolio refresh-failure banner shown when a pull-to-refresh fails but stale content remains.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Couldn't refresh — showing last saved apps"
+    "No apps available" : {
+      "comment" : "Portfolio empty state title.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Apps verfügbar"
           }
         },
-        "de": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No apps available"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay apps disponibles"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune application disponible"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用可能なアプリがありません"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 가능한 앱이 없습니다"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum app disponível"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无可用应用"
           }
         }
       }
     },
-    "Retry": {
-      "comment": "Portfolio refresh-failure banner retry button.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Retry"
+    "Open %@ on the App Store" : {
+      "comment" : "Accessibility label for a portfolio app row.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ im App Store öffnen"
           }
         },
-        "de": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open %@ on the App Store"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir %@ en el App Store"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir %@ sur l’App Store"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Storeで%@を開く"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store에서 %@ 열기"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir %@ na App Store"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "new",
-            "value": ""
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 App Store 打开 %@"
+          }
+        }
+      }
+    },
+    "Our Apps" : {
+      "comment" : "Portfolio section header.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unsere Apps"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Our Apps"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuestras apps"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nos apps"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当社のアプリ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nossos apps"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我们的应用"
+          }
+        }
+      }
+    },
+    "Our apps will appear here when available." : {
+      "comment" : "Portfolio empty state message.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unsere Apps werden hier angezeigt, sobald sie verfügbar sind."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Our apps will appear here when available."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuestras apps aparecerán aquí cuando estén disponibles."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nos apps apparaîtront ici lorsqu’elles seront disponibles."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用可能になり次第、ここに当社のアプリが表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱이 이용 가능해지면 여기에 표시됩니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nossos apps aparecerão aqui quando estiverem disponíveis."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我们的应用将在可用时显示在此处。"
+          }
+        }
+      }
+    },
+    "Request was cancelled" : {
+      "comment" : "Portfolio lookup error.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfrage wurde abgebrochen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request was cancelled"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La solicitud fue cancelada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La requête a été annulée"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リクエストがキャンセルされました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "요청이 취소되었습니다"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A solicitação foi cancelada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求已取消"
+          }
+        }
+      }
+    },
+    "Retry" : {
+      "comment" : "Portfolio refresh-failure banner retry button.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintentar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réessayer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再試行"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tentar novamente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "comment" : "Portfolio retry button.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nochmals versuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intentar de nuevo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réessayer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再試行する"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tentar Novamente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
+    },
+    "Unable to load apps" : {
+      "comment" : "Portfolio error title.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apps konnten nicht geladen werden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to load apps"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pueden cargar las apps"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de charger les apps"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを読み込めませんでした"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱을 불러올 수 없습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível carregar os apps"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法加载应用"
+          }
+        }
+      }
+    },
+    "View All Our Apps" : {
+      "comment" : "Portfolio developer page button title.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle unsere Apps ansehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View All Our Apps"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver todas nuestras apps"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voir toutes nos apps"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当社のすべてのアプリを見る"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저희의 모든 앱 보기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver todos os nossos apps"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看我们的所有应用"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

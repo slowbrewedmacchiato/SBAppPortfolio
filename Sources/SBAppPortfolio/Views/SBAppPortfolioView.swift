@@ -98,7 +98,7 @@ public struct SBAppPortfolioView: View {
         HStack(spacing: 8) {
             Image(systemName: "wifi.slash")
                 .foregroundStyle(.secondary)
-            Text(String(localized: "Couldn't refresh — showing last saved apps", bundle: .module, comment: "Portfolio refresh-failure banner shown when a pull-to-refresh fails but stale content remains."))
+            Text(String(localized: "Couldn't refresh. Showing your last saved apps.", bundle: .module, comment: "Portfolio refresh-failure banner shown when a pull-to-refresh fails but stale content remains."))
                 .font(.caption)
                 .foregroundStyle(.secondary)
             Spacer(minLength: 0)
