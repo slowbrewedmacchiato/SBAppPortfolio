@@ -16,7 +16,7 @@ jobs:
     name: Package
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # swift-tools-version 6.0 needs Swift 6.0 or newer. The macos-15 image
       # ships it by default; fail loudly rather than mid-build if that changes.
@@ -36,7 +36,7 @@ jobs:
     name: Example app
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Thicket.xcodeproj is committed, so no XcodeGen step is needed here.
       # Regenerate locally with `cd Example && xcodegen generate` after
@@ -54,7 +54,7 @@ jobs:
     name: Localization
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Guards the failure modes that shipped untranslated strings before: a
       # key present in code but missing from the catalog, a locale entry that

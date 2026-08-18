@@ -21,7 +21,7 @@ jobs:
     name: Build DocC
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # swift-docc-plugin is gated behind SBAPP_PORTFOLIO_DEVELOPMENT so it
       # stays out of consumers' package graphs. Opt in for this job only.
@@ -50,7 +50,7 @@ jobs:
           <p><a href="documentation/sbappportfolio/">SBAppPortfolio documentation</a></p>
           HTML
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: ./docs-site
 
@@ -63,4 +63,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,10 @@
+# The package itself has no dependencies. This keeps the GitHub Actions used
+# by CI current, which is where version drift actually shows up.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "ci"

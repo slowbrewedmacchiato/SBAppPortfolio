@@ -4,6 +4,7 @@
 [![Swift 6.0](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
 [![Platforms](https://img.shields.io/badge/platforms-iOS%2018%20%7C%20macOS%2013-blue.svg)](https://developer.apple.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Documentation](https://img.shields.io/badge/docs-DocC-informational.svg)](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio)
 
 **A SwiftUI "More From Us" sheet for studios that ship more than one app.**
 
@@ -119,6 +120,10 @@ To add a locale, extend `Localizable.xcstrings` and open a PR. CI fails the buil
 ## Documentation
 
 Full integration guide: [`Docs/GettingStarted.md`](Docs/GettingStarted.md)
+
+API reference: [slowbrewedmacchiato.github.io/SBAppPortfolio](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio), rebuilt from source on every push to `main`.
+
+Contributing: [CONTRIBUTING.md](CONTRIBUTING.md). Security issues: [SECURITY.md](SECURITY.md).
 
 Generate DocC documentation (maintainers):
 
