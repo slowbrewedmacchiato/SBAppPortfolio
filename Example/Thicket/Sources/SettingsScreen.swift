@@ -50,7 +50,7 @@ struct SettingsScreen: View {
                 SBAppPortfolioView(configuration: .thicket)
                     .tint(ThicketPalette.moss(for: scheme))
             case .slowBrewed:
-                SBAppPortfolioView(configuration: .slowBrewed(currentAppID: Self.thicketAppID))
+                SBAppPortfolioView(configuration: .slowBrewed(currentAppID: ThicketAppStore.appID))
                     .tint(ThicketPalette.moss(for: scheme))
             }
         }
@@ -178,10 +178,17 @@ struct SettingsScreen: View {
             .padding(.top, 4)
     }
 
-    /// Thicket is fictional, so this ID matches nothing in the catalog and every
-    /// real app stays visible. A shipping app passes its own App Store ID here
-    /// and the package filters it out automatically.
-    static let thicketAppID = "0000000000"
+}
+
+/// Thicket is fictional, so this ID matches nothing in the catalog and every
+/// real app stays visible. A shipping app passes its own App Store ID here and
+/// the package filters it out automatically.
+///
+/// Declared outside `SettingsScreen` because a `View` is `@MainActor` isolated
+/// under Swift 6, and the nonisolated `SBAppPortfolioConfiguration` extension
+/// below needs to read it.
+enum ThicketAppStore {
+    static let appID = "0000000000"
 }
 
 // MARK: - Configuration
@@ -209,7 +216,7 @@ extension SBAppPortfolioConfiguration {
                     fallbackDescription: "Track glucose with clarity and calm design."
                 )
             ],
-            currentAppID: SettingsScreen.thicketAppID,
+            currentAppID: ThicketAppStore.appID,
             developerPageURL: URL(string: "https://apps.apple.com/developer/id1609899925")!
         )
     }
