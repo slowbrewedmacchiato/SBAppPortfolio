@@ -25,9 +25,12 @@ enum Appearance: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .system: "Auto"
-        case .light: "Light"
-        case .dark: "Dark"
+        case .system:
+            String(localized: "Auto", comment: "Appearance picker option following the system setting.")
+        case .light:
+            String(localized: "Light", comment: "Appearance picker option for light mode.")
+        case .dark:
+            String(localized: "Dark", comment: "Appearance picker option for dark mode.")
         }
     }
 

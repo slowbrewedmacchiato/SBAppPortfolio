@@ -5,6 +5,10 @@ options:
     iOS: "18.0"
   createIntermediateGroups: true
   generateEmptyDirectories: true
+  developmentLanguage: en
+  # Locales the app ships. Must match the localizations in
+  # Thicket/Sources/Localization/Localizable.xcstrings.
+  knownRegions: [en, de, es, fr, ja, ko, pt-BR, zh-Hans, Base]
 
 packages:
   SBAppPortfolio:
@@ -26,6 +30,9 @@ targets:
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
         SWIFT_VERSION: "6.0"
+        # Required for Xcode to extract String(localized:) keys from Swift
+        # into Localizable.xcstrings. Without it every key shows as stale.
+        SWIFT_EMIT_LOC_STRINGS: YES
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_CFBundleDisplayName: Thicket

@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4356A4102C1DC4996BBC2B6C /* ThicketApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1754D05C3FF8B2CAC96B26BC /* ThicketApp.swift */; };
+		63F08E18CB118E01443F3774 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F96C679AF595B13309338E /* SettingsScreen.swift */; };
 		662F6661CB6BC3BD0C0FF700 /* SBAppPortfolio in Frameworks */ = {isa = PBXBuildFile; productRef = 45A8506A74FAD2A983E4A36D /* SBAppPortfolio */; };
+		8749730F1EC9D034DE7C9941 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7B2896DBAD0426CB06D876EA /* Localizable.xcstrings */; };
+		B68C4E83149C2452EA5C3265 /* ThicketTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6F7CFC4313DBCAB4D4A0A6 /* ThicketTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9B01F1C42E4BB58E9FDA6705 /* Thicket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thicket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1754D05C3FF8B2CAC96B26BC /* ThicketApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThicketApp.swift; sourceTree = "<group>"; };
+		7B2896DBAD0426CB06D876EA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		9B01F1C42E4BB58E9FDA6705 /* Thicket.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Thicket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECF869AB61D57F64F1D0B2E /* SBAppPortfolio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SBAppPortfolio; path = ..; sourceTree = SOURCE_ROOT; };
+		CB6F7CFC4313DBCAB4D4A0A6 /* ThicketTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThicketTheme.swift; sourceTree = "<group>"; };
+		F3F96C679AF595B13309338E /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		02E69B50303468AF007FAB47 /* Thicket */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Thicket;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		8F05A667A61054C5F63B4A88 /* Frameworks */ = {
@@ -39,9 +39,28 @@
 			isa = PBXGroup;
 			children = (
 				B3531E1C1BBF121A231C74A1 /* Packages */,
-				02E69B50303468AF007FAB47 /* Thicket */,
+				17CC288F00A57FC45B215764 /* Thicket */,
 				CBA58B15FB74DB81C051279F /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		17CC288F00A57FC45B215764 /* Thicket */ = {
+			isa = PBXGroup;
+			children = (
+				416D9592CF995EE86A6160BA /* Sources */,
+			);
+			path = Thicket;
+			sourceTree = "<group>";
+		};
+		416D9592CF995EE86A6160BA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F3F96C679AF595B13309338E /* SettingsScreen.swift */,
+				1754D05C3FF8B2CAC96B26BC /* ThicketApp.swift */,
+				CB6F7CFC4313DBCAB4D4A0A6 /* ThicketTheme.swift */,
+				C7437B1829851778DE7DDEAF /* Localization */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		B3531E1C1BBF121A231C74A1 /* Packages */ = {
@@ -50,6 +69,14 @@
 				BECF869AB61D57F64F1D0B2E /* SBAppPortfolio */,
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		C7437B1829851778DE7DDEAF /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				7B2896DBAD0426CB06D876EA /* Localizable.xcstrings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		CBA58B15FB74DB81C051279F /* Products */ = {
@@ -68,14 +95,12 @@
 			buildConfigurationList = 6FE9145E62C53882C37238B6 /* Build configuration list for PBXNativeTarget "Thicket" */;
 			buildPhases = (
 				ADF027A88D86C4D266691AC2 /* Sources */,
+				F6DA849AC2C413B2460A0766 /* Resources */,
 				8F05A667A61054C5F63B4A88 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				02E69B50303468AF007FAB47 /* Thicket */,
 			);
 			name = Thicket;
 			packageProductDependencies = (
@@ -104,13 +129,14 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				de,
 				en,
 				es,
-				de,
 				fr,
-				"zh-Hans",
 				ja,
+				ko,
 				"pt-BR",
+				"zh-Hans",
 			);
 			mainGroup = 043FB967125B3D3CA20199FD;
 			minimizedProjectReferenceProxies = 1;
@@ -127,11 +153,25 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F6DA849AC2C413B2460A0766 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8749730F1EC9D034DE7C9941 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		ADF027A88D86C4D266691AC2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F08E18CB118E01443F3774 /* SettingsScreen.swift in Sources */,
+				4356A4102C1DC4996BBC2B6C /* ThicketApp.swift in Sources */,
+				B68C4E83149C2452EA5C3265 /* ThicketTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,7 +229,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
@@ -253,7 +292,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -281,6 +319,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.slowbrewed.example.thicket;
 				PRODUCT_NAME = Thicket;
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -308,6 +347,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.slowbrewed.example.thicket;
 				PRODUCT_NAME = Thicket;
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

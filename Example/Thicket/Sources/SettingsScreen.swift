@@ -16,7 +16,7 @@ struct SettingsScreen: View {
     @State private var remindersOn = true
 
     /// Which catalog the sheet should show. A single `sheet(item:)` drives both
-    /// rows — stacking two `sheet(isPresented:)` modifiers on one view does not
+    /// rows, stacking two `sheet(isPresented:)` modifiers on one view does not
     /// work in SwiftUI, since only the last one registers.
     enum PortfolioKind: String, Identifiable {
         case custom
@@ -38,7 +38,7 @@ struct SettingsScreen: View {
                 .padding(20)
             }
             .background(ThicketPalette.background(for: scheme))
-            .navigationTitle("Settings")
+            .navigationTitle(String(localized: "Settings", comment: "Settings screen navigation title."))
             .navigationBarTitleDisplayMode(.inline)
         }
         .tint(ThicketPalette.moss(for: scheme))
@@ -72,7 +72,7 @@ struct SettingsScreen: View {
             Text("Thicket")
                 .roundedFont(.title2, weight: .semibold)
 
-            Text("A quiet place for your notes.")
+            Text(String(localized: "A quiet place for your notes.", comment: "App tagline under the icon on the settings screen."))
                 .roundedFont(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -82,11 +82,11 @@ struct SettingsScreen: View {
     private var appearanceCard: some View {
         ThicketCard {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Appearance")
+                Text(String(localized: "Appearance", comment: "Label for the light/dark appearance picker."))
                     .roundedFont(.footnote, weight: .semibold)
                     .foregroundStyle(.secondary)
 
-                Picker("Appearance", selection: $appearance) {
+                Picker(String(localized: "Appearance", comment: "Label for the light/dark appearance picker."), selection: $appearance) {
                     ForEach(Appearance.allCases) { option in
                         Text(option.label).tag(option)
                     }
@@ -101,7 +101,7 @@ struct SettingsScreen: View {
         ThicketCard {
             Toggle(isOn: $remindersOn) {
                 Label {
-                    Text("Daily reminder")
+                    Text(String(localized: "Daily reminder", comment: "Toggle label for the sample daily reminder preference."))
                         .roundedFont(.body)
                 } icon: {
                     Image(systemName: "bell.badge")
@@ -117,8 +117,8 @@ struct SettingsScreen: View {
         ThicketCard {
             VStack(spacing: 0) {
                 portfolioRow(
-                    title: "More From Us",
-                    subtitle: "Custom catalog, built with the general API",
+                    title: String(localized: "More From Us", comment: "Row title opening the portfolio sheet with a custom catalog."),
+                    subtitle: String(localized: "Custom catalog, built with the general API", comment: "Row subtitle describing the general configuration API."),
                     symbol: "square.grid.2x2.fill"
                 ) { presentedPortfolio = .custom }
 
@@ -127,8 +127,8 @@ struct SettingsScreen: View {
                     .padding(.leading, 56)
 
                 portfolioRow(
-                    title: "More From Slow Brewed",
-                    subtitle: "Built-in catalog, integrated in one line",
+                    title: String(localized: "More From Slow Brewed", comment: "Row title opening the portfolio sheet with the built-in catalog."),
+                    subtitle: String(localized: "Built-in catalog, integrated in one line", comment: "Row subtitle describing the built-in catalog convenience."),
                     symbol: "cup.and.saucer.fill"
                 ) { presentedPortfolio = .slowBrewed }
             }
@@ -171,7 +171,7 @@ struct SettingsScreen: View {
     }
 
     private var versionFooter: some View {
-        Text("Thicket 1.0 · Example app for SBAppPortfolio")
+        Text(String(localized: "Thicket 1.0 · Example app for SBAppPortfolio", comment: "Version footer at the bottom of the settings screen."))
             .roundedFont(.caption2)
             .foregroundStyle(.tertiary)
             .multilineTextAlignment(.center)
@@ -188,7 +188,7 @@ struct SettingsScreen: View {
 
 extension SBAppPortfolioConfiguration {
     /// The general-purpose path: any studio supplies its own catalog. The App
-    /// Store IDs below are real so the sheet renders live metadata — placeholder
+    /// Store IDs below are real so the sheet renders live metadata, placeholder
     /// IDs would return no results and the sheet would show its empty state.
     static var thicket: SBAppPortfolioConfiguration {
         SBAppPortfolioConfiguration(
