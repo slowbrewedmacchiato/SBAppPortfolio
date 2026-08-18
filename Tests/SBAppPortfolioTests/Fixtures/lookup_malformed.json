@@ -1,0 +1,6 @@
+{
+  "resultCount": "not-a-number",
+  "results": [
+    {"trackId": "should-be-int"}
+  ]
+}

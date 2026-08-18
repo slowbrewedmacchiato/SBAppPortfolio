@@ -1,0 +1,41 @@
+{
+  "resultCount": 2,
+  "results": [
+    {
+      "artworkUrl100": "https://example.com/artwork-b-100.png",
+      "trackCensoredName": "Example App B",
+      "artworkUrl60": "https://example.com/artwork-b-60.png",
+      "artistViewUrl": "https://apps.apple.com/artist/id1000000000",
+      "trackViewUrl": "https://apps.apple.com/app/id1000000002",
+      "bundleId": "com.example.appb",
+      "primaryGenreName": "Photo & Video",
+      "genres": ["Photo & Video"],
+      "description": "Example app B is a synthetic test fixture.",
+      "artistName": "Example Studio",
+      "price": 0,
+      "version": "2.0.1",
+      "trackId": 1000000002,
+      "trackName": "Example App B",
+      "formattedPrice": "Free",
+      "artistId": 1000000000
+    },
+    {
+      "artworkUrl100": "https://example.com/artwork-d-100.png",
+      "trackCensoredName": "Example App D",
+      "artworkUrl60": "https://example.com/artwork-d-60.png",
+      "artistViewUrl": "https://apps.apple.com/artist/id1000000000",
+      "trackViewUrl": "https://apps.apple.com/app/id1000000004",
+      "bundleId": "com.example.appd",
+      "primaryGenreName": "Productivity",
+      "genres": ["Productivity"],
+      "description": "Example app D is a synthetic test fixture.",
+      "artistName": "Example Studio",
+      "price": 0,
+      "version": "1.4.0",
+      "trackId": 1000000004,
+      "trackName": "Example App D",
+      "formattedPrice": "Free",
+      "artistId": 1000000000
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "resultCount": 4,
+  "results": [
+    {
+      "trackId": 1000000001,
+      "trackName": "Example App A",
+      "description": "Good element one.",
+      "artworkUrl100": "https://example.com/artwork-a-100.png",
+      "trackViewUrl": "https://apps.apple.com/app/id1000000001",
+      "artistName": "Example Studio",
+      "price": 0,
+      "formattedPrice": "Free"
+    },
+    {
+      "trackId": 1000000002,
+      "trackName": "Example App B",
+      "description": "Good element two.",
+      "artworkUrl100": "https://example.com/artwork-b-100.png",
+      "trackViewUrl": "https://apps.apple.com/app/id1000000002",
+      "artistName": "Example Studio",
+      "price": 0,
+      "formattedPrice": "Free"
+    },
+    {
+      "trackName": "Bad element — no trackId, will fail to decode",
+      "description": "Should be dropped, not propagated."
+    },
+    {
+      "trackId": 1000000003,
+      "trackName": "Example App C",
+      "description": "Good element three.",
+      "artworkUrl100": "https://example.com/artwork-c-100.png",
+      "trackViewUrl": "https://apps.apple.com/app/id1000000003",
+      "artistName": "Example Studio",
+      "price": 0,
+      "formattedPrice": "Free"
+    }
+  ]
+}

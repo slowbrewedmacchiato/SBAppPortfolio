@@ -1,0 +1,35 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+.build/
+DerivedData/
+*.xcodeproj
+*.xcworkspace
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# DocC output (regenerated on demand)
+.docc-build/
+.build/documentation/
+
+# Swift Testing / XCTest artifacts
+*.xctestrun
+
+# Build logs and runtime artifacts
+*.log
+xcode_runtime_logs.log
+
+# Internal planning doc — not for public history
+INTERNAL_README.md
+
+# Claude Code local config
+.claude/
