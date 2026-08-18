@@ -1,13 +1,17 @@
 # SBAppPortfolio
 
-[![CI](https://github.com/slowbrewed/SBAppPortfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/slowbrewed/SBAppPortfolio/actions/workflows/ci.yml)
+[![CI](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml)
 [![Swift 6.0](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
 [![Platforms](https://img.shields.io/badge/platforms-iOS%2018%20%7C%20macOS%2013-blue.svg)](https://developer.apple.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A SwiftUI "More From Us" sheet for iOS apps. Shows your studio's other apps with live App Store metadata, fetched from the iTunes Lookup API, cached for one hour, and rendered in a neutral, themeable UI.
+**A SwiftUI "More From Us" sheet for studios that ship more than one app.**
 
-Built for indie developers who ship multiple apps and want a drop-in cross-sell surface without rebuilding the same sheet in every project.
+Your users already trust you. This is the screen that tells them what else you make: a settings sheet listing your other apps with their real icons, names, subtitles, and prices, pulled live from the App Store so nothing goes stale when you rename an app or change a price.
+
+The app it runs in excludes itself. The sheet inherits your app's tint instead of imposing its own look. It ships in eight languages and depends on nothing.
+
+Extracted from six Slow Brewed apps that had each grown their own copy of this screen.
 
 ## Requirements
 
@@ -20,7 +24,7 @@ Built for indie developers who ship multiple apps and want a drop-in cross-sell 
 Add the package as a dependency in Xcode (File ▸ Add Package Dependencies…) or in your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/slowbrewed/SBAppPortfolio.git", from: "1.0.0")
+.package(url: "https://github.com/slowbrewedmacchiato/SBAppPortfolio.git", from: "1.0.0")
 ```
 
 Add `SBAppPortfolio` to your target's dependencies.

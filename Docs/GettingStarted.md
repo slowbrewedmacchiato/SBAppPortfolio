@@ -12,7 +12,7 @@
 Add `SBAppPortfolio` as a package dependency in Xcode (File ▸ Add Package Dependencies…) pointing at the repository, or in your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/slowbrewed/SBAppPortfolio.git", from: "1.0.0")
+.package(url: "https://github.com/slowbrewedmacchiato/SBAppPortfolio.git", from: "1.0.0")
 ```
 
 And add `SBAppPortfolio` to your target's dependencies.
