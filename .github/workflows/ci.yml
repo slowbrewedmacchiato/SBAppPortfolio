@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    name: Package
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      # swift-tools-version 6.0 needs Swift 6.0 or newer. The macos-15 image
+      # ships it by default; fail loudly rather than mid-build if that changes.
+      - name: Check toolchain
+        run: |
+          swift --version
+          swift -version 2>&1 | grep -qE 'Swift version (6|[7-9])\.' \
+            || { echo "::error::Swift 6.0+ required (swift-tools-version 6.0)"; exit 1; }
+
+      - name: Build
+        run: swift build
+
+      - name: Test
+        run: swift test
+
+  example:
+    name: Example app
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      # Thicket.xcodeproj is committed, so no XcodeGen step is needed here.
+      # Regenerate locally with `cd Example && xcodegen generate` after
+      # editing project.yml.
+      - name: Build for iOS Simulator
+        run: |
+          xcodebuild build \
+            -project Example/Thicket.xcodeproj \
+            -scheme Thicket \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
+
+  localization:
+    name: Localization
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Guards the failure modes that shipped untranslated strings before: a
+      # key present in code but missing from the catalog, a locale entry that
+      # exists but is empty, and a key covering only some locales.
+      - name: Verify catalogs are complete
+        run: python3 Scripts/check-localization.py
