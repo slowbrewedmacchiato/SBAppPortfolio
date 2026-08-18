@@ -1,0 +1,66 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow one deployment at a time, and let an in-flight run finish rather than
+# cancelling it partway through publishing.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: Build DocC
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      # swift-docc-plugin is gated behind SBAPP_PORTFOLIO_DEVELOPMENT so it
+      # stays out of consumers' package graphs. Opt in for this job only.
+      - name: Generate documentation
+        env:
+          SBAPP_PORTFOLIO_DEVELOPMENT: "1"
+        run: |
+          swift package --allow-writing-to-directory ./docs-site \
+            generate-documentation \
+            --target SBAppPortfolio \
+            --disable-indexing \
+            --transform-for-static-hosting \
+            --hosting-base-path SBAppPortfolio \
+            --output-path ./docs-site
+
+      # Pages serves the site root, but DocC's entry point is nested. Redirect
+      # so the bare repository URL lands on the documentation instead of a 404.
+      - name: Add root redirect
+        run: |
+          cat > ./docs-site/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <title>SBAppPortfolio</title>
+          <meta http-equiv="refresh" content="0; url=documentation/sbappportfolio/">
+          <link rel="canonical" href="documentation/sbappportfolio/">
+          <p><a href="documentation/sbappportfolio/">SBAppPortfolio documentation</a></p>
+          HTML
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs-site
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
