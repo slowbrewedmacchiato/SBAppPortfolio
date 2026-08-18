@@ -8,8 +8,8 @@ Cross-app discovery ("More From Us") sheet for iOS apps.
 
 The package ships:
 
-- A configurable studio catalog — supply your own via ``SBAppPortfolioConfiguration/studioApps``, or use the built-in ``SBStudioApps/slowBrewed`` if you're a Slow Brewed app.
-- Runtime self-exclusion via ``SBAppPortfolioConfiguration/currentAppID`` — no per-app hand-maintained omission lists.
+- A configurable studio catalog, supply your own via ``SBAppPortfolioConfiguration/studioApps``, or use the built-in ``SBStudioApps/slowBrewed`` if you're a Slow Brewed app.
+- Runtime self-exclusion via ``SBAppPortfolioConfiguration/currentAppID``, no per-app hand-maintained omission lists.
 - Configurable storefront (``SBAppPortfolioConfiguration/lookupCountry``) so users in CN/JP/etc. see localized metadata and prices.
 - Bundled `Localizable.xcstrings` with eight locales: en, de, es, fr, ja, ko, pt-BR, zh-Hans.
 - A single batched lookup request (comma-separated App Store IDs), a module-level actor-backed cache with a 1-hour TTL, and Swift Testing tests with mock fixtures.

@@ -43,7 +43,7 @@ public struct SBAppStoreApp: Codable, Identifiable, Sendable {
     ///
     /// Some App Store entries omit `price` *and* `formattedPrice` entirely.
     /// A paid app always reports a price, so an entry carrying no price data
-    /// at all is treated as free — otherwise it would render the word "Free"
+    /// at all is treated as free, otherwise it would render the word "Free"
     /// beside GET pills for its equally-free siblings in the same list.
     public var isFree: Bool {
         if let price { return price == 0 }
@@ -127,7 +127,7 @@ struct SBAppStoreLookupResponse: Codable, Sendable {
         // malformed entry (missing trackId, wrong type, etc.) is dropped via
         // `try?` rather than failing the whole batch.
         //
-        // Note: do NOT pre-size `apps` from `resultCount` — that field is
+        // Note: do NOT pre-size `apps` from `resultCount`, that field is
         // attacker-controlled network data. A hostile `resultCount: Int.max`
         // would trigger a fatal allocation via `reserveCapacity` before the
         // loop runs, defeating the per-element isolation. Let the array grow

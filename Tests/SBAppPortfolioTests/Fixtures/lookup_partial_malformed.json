@@ -22,7 +22,7 @@
       "formattedPrice": "Free"
     },
     {
-      "trackName": "Bad element — no trackId, will fail to decode",
+      "trackName": "Bad element with no trackId, will fail to decode",
       "description": "Should be dropped, not propagated."
     },
     {

@@ -283,7 +283,7 @@ struct ServiceTests {
         let serviceA = SBAppStoreLookupService(urlSession: session)
         _ = try await serviceA.fetchApps(for: config) // network
 
-        // New service instance, same shared cache — should hit, not network.
+        // New service instance, same shared cache, should hit, not network.
         let serviceB = SBAppStoreLookupService(urlSession: session)
         let apps = try await serviceB.fetchApps(for: config)
 

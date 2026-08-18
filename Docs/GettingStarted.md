@@ -19,7 +19,7 @@ And add `SBAppPortfolio` to your target's dependencies.
 
 ## Present the sheet (custom catalog)
 
-The simplest integration — define your studio's apps, pass the current app's ID so it's excluded, and present the sheet:
+The simplest integration, define your studio's apps, pass the current app's ID so it's excluded, and present the sheet:
 
 ```swift
 import SBAppPortfolio
@@ -69,11 +69,11 @@ SBAppPortfolioConfiguration(
 )
 ```
 
-For automatic device-storefront detection, read `await Storefront.current?.countryCode` (StoreKit 2) — or `SKPaymentQueue.default().storefront?.countryCode` on StoreKit 1 — and pass the result. The package does not depend on StoreKit to keep its dependency surface minimal.
+For automatic device-storefront detection, read `await Storefront.current?.countryCode` (StoreKit 2), or `SKPaymentQueue.default().storefront?.countryCode` on StoreKit 1, and pass the result. The package does not depend on StoreKit to keep its dependency surface minimal.
 
 ## Theming
 
-The sheet renders in neutral SwiftUI — system semantic colors and SF Symbols. Apply your app's theme via standard view modifiers on `SBAppPortfolioView` (tint, accent, custom symbols). Row backgrounds use `Color(.secondarySystemGroupedBackground)` on iOS; the sheet background uses `Color(.systemGroupedBackground)`.
+The sheet renders in neutral SwiftUI, system semantic colors and SF Symbols. Apply your app's theme via standard view modifiers on `SBAppPortfolioView` (tint, accent, custom symbols). Row backgrounds use `Color(.secondarySystemGroupedBackground)` on iOS; the sheet background uses `Color(.systemGroupedBackground)`.
 
 ## Localization
 

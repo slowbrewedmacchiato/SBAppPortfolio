@@ -22,7 +22,7 @@ public struct SBAppStoreLookupService: Sendable {
 
     /// Creates a lookup service bound to the shared module-level cache.
     /// The shared cache survives sheet dismissal, so the 1-hour TTL is
-    /// effective across reopenings — not just within a single presentation.
+    /// effective across reopenings, not just within a single presentation.
     public init(urlSession: URLSession = .shared) {
         self.urlSession = urlSession
         self.cache = .shared
@@ -120,7 +120,7 @@ public struct SBAppStoreLookupService: Sendable {
 /// cache entry.
 ///
 /// The default cache used by ``SBAppStoreLookupService`` is
-/// ``SBAppStoreLookupCache/shared`` — a module-level `let` instance that
+/// ``SBAppStoreLookupCache/shared``, a module-level `let` instance that
 /// survives sheet dismissal, so the 1-hour TTL persists across reopenings
 /// rather than being reset every time the host presents the sheet. Tests
 /// construct isolated instances via `SBAppStoreLookupCache()` to avoid

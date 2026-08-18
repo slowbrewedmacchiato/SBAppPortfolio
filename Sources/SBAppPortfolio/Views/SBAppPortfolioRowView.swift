@@ -50,7 +50,7 @@ struct SBAppPortfolioRowView: View {
 
                         // Matches the App Store's own action pill: a filled
                         // neutral capsule with bold tinted text. Using `.tint`
-                        // keeps the package theme-neutral — the pill adopts
+                        // keeps the package theme-neutral, the pill adopts
                         // whatever accent the host applies to the sheet.
                         Text(app.isFree
                             ? String(localized: "GET", bundle: .module, comment: "Portfolio row action label for free apps.")

@@ -1,6 +1,6 @@
 # SBAppPortfolio
 
-A SwiftUI "More From Us" sheet for iOS apps. Shows your studio's other apps with live App Store metadata — fetched from the iTunes Lookup API, cached for one hour, and rendered in a neutral, themeable UI.
+A SwiftUI "More From Us" sheet for iOS apps. Shows your studio's other apps with live App Store metadata, fetched from the iTunes Lookup API, cached for one hour, and rendered in a neutral, themeable UI.
 
 Built for indie developers who ship multiple apps and want a drop-in cross-sell surface without rebuilding the same sheet in every project.
 
@@ -54,13 +54,13 @@ The sheet fetches live metadata (icon, name, subtitle, price, genre) for every a
 ## Features
 
 - **Live App Store metadata** via the iTunes Lookup API (single batched request for all apps)
-- **Runtime self-exclusion** — pass `currentAppID` and the host app is filtered out automatically; no per-app omission lists to maintain
-- **Configurable storefront** — pass `lookupCountry` (ISO code) so users in non-US regions see localized metadata and prices
-- **Locale-independent free-app detection** — uses the numeric `price` field, not the localized `formattedPrice` string, so the GET pill renders correctly in every storefront
-- **Resilient decoding** — a malformed entry in the lookup response is dropped, not propagated; one bad sibling app doesn't blank the sheet
-- **Bundled localization** — `Localizable.xcstrings` with 8 locales (en, de, es, fr, ja, ko, pt-BR, zh-Hans)
-- **Neutral SwiftUI** — system semantic colors and SF Symbols; apply your own theme via standard view modifiers
-- **Swift Testing** — mock JSON fixtures covering parsing, configuration, cache behavior, and error mapping
+- **Runtime self-exclusion**: pass `currentAppID` and the host app is filtered out automatically; no per-app omission lists to maintain
+- **Configurable storefront**: pass `lookupCountry` (ISO code) so users in non-US regions see localized metadata and prices
+- **Locale-independent free-app detection**: uses the numeric `price` field, not the localized `formattedPrice` string, so the GET pill renders correctly in every storefront
+- **Resilient decoding**: a malformed entry in the lookup response is dropped, not propagated; one bad sibling app doesn't blank the sheet
+- **Bundled localization**: `Localizable.xcstrings` with 8 locales (en, de, es, fr, ja, ko, pt-BR, zh-Hans)
+- **Neutral SwiftUI**: system semantic colors and SF Symbols; apply your own theme via standard view modifiers
+- **Swift Testing**: mock JSON fixtures covering parsing, configuration, cache behavior, and error mapping
 
 ## Configuration
 
@@ -95,11 +95,11 @@ SBAppPortfolioConfiguration(
 )
 ```
 
-For automatic device-storefront detection, read `await Storefront.current?.countryCode` (StoreKit 2) — or `SKPaymentQueue.default().storefront?.countryCode` on StoreKit 1 — and pass the result. The package does not depend on StoreKit to keep its dependency surface minimal.
+For automatic device-storefront detection, read `await Storefront.current?.countryCode` (StoreKit 2), or `SKPaymentQueue.default().storefront?.countryCode` on StoreKit 1, and pass the result. The package does not depend on StoreKit to keep its dependency surface minimal.
 
 ## Theming
 
-The sheet renders in neutral SwiftUI — system semantic colors (`Color.primary`, `Color.secondary`, grouped-list backgrounds) and SF Symbols. Apply your app's theme via standard view modifiers on `SBAppPortfolioView`.
+The sheet renders in neutral SwiftUI, system semantic colors (`Color.primary`, `Color.secondary`, grouped-list backgrounds) and SF Symbols. Apply your app's theme via standard view modifiers on `SBAppPortfolioView`.
 
 ## Localization
 

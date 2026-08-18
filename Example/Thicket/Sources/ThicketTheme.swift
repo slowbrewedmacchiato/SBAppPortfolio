@@ -10,7 +10,7 @@ enum ThicketTheme {
 }
 
 enum ThicketPalette {
-    /// Warm off-white in light, near-black in dark — softer than pure system grays.
+    /// Warm off-white in light, near-black in dark, softer than pure system grays.
     static func background(for scheme: ColorScheme) -> Color {
         scheme == .dark
             ? Color(red: 0.035, green: 0.035, blue: 0.034)
@@ -31,14 +31,14 @@ enum ThicketPalette {
             : Color.black.opacity(0.055)
     }
 
-    /// Primary accent — a muted moss green.
+    /// Primary accent, a muted moss green.
     static func moss(for scheme: ColorScheme) -> Color {
         scheme == .dark
             ? Color(red: 0.58, green: 0.64, blue: 0.48)
             : Color(red: 0.34, green: 0.40, blue: 0.27)
     }
 
-    /// Secondary accent — a warm rust.
+    /// Secondary accent, a warm rust.
     static func rust(for scheme: ColorScheme) -> Color {
         scheme == .dark
             ? Color(red: 0.74, green: 0.50, blue: 0.40)

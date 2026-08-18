@@ -144,7 +144,7 @@ struct LookupParsingTests {
 
     @Test("isFree is false for a paid app regardless of localized formattedPrice string")
     func isFreeFalseForPaid() throws {
-        // German storefront returns "0,99 €" — the old `displayPrice == "Free"`
+        // German storefront returns "0,99 €", the old `displayPrice == "Free"`
         // check would have wrongly rendered the GET pill here.
         let json = """
         {"resultCount":1,"results":[{"trackId":1,"trackName":"X","description":"d","artworkUrl100":"a","trackViewUrl":"u","artistName":"a","price":0.99,"formattedPrice":"0,99 €"}]}

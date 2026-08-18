@@ -10,7 +10,7 @@ import UIKit
 
 /// The "More From Us" sheet. Presents a studio catalog with live App Store
 /// metadata, loading skeletons, an error state with retry, and a footer
-/// link to the developer's App Store page. Renders in neutral SwiftUI — the
+/// link to the developer's App Store page. Renders in neutral SwiftUI, the
 /// host can apply its own theme via standard view modifiers.
 public struct SBAppPortfolioView: View {
     let configuration: SBAppPortfolioConfiguration
