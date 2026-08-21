@@ -8,8 +8,9 @@ Open `Thicket.xcodeproj` and run. The project references the package by local pa
 
 ## What it demonstrates
 
-- **The general API**: "More From Us" builds an `SBAppPortfolioConfiguration` with its own catalog. This is the path most adopters take.
+- **The configurable prebuilt UI**: "More From Us" builds an `SBAppPortfolioConfiguration` with its own catalog, preserves catalog order and curated fallback summaries, and hides genre labels through `SBAppPortfolioPresentation`.
 - **The built-in convenience**: "More From Slow Brewed" uses `.slowBrewed(currentAppID:)`, a one-liner for Slow Brewed apps.
+- **The data-only Core**: "Custom App List" imports only `SBAppPortfolioCore`, preserves host-owned order and fallback copy, and overlays live metadata in a custom AppToolkit-inspired card list.
 - **Host theming**: Thicket has its own palette and SF Pro Rounded type. The package renders neutrally, so the sheet inherits the host's `tint` without any theming API.
 - **Light and dark**: the in-app Appearance picker switches modes without leaving the screen.
 - **Self-exclusion**: Thicket passes an App Store ID that matches nothing in the catalog, so every app stays visible. A shipping app passes its own ID and the package filters it out.

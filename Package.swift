@@ -23,23 +23,39 @@ let package = Package(
     name: "SBAppPortfolio",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v18),
-        .macOS(.v13)
+        .iOS(.v16),
+        .macOS(.v11),
+        .watchOS(.v9),
+        .tvOS(.v16),
+        .visionOS(.v1)
     ],
     products: [
-        .library(name: "SBAppPortfolio", targets: ["SBAppPortfolio"])
+        .library(name: "SBAppPortfolio", targets: ["SBAppPortfolio"]),
+        .library(name: "SBAppPortfolioCore", targets: ["SBAppPortfolioCore"])
     ],
     dependencies: dependencies,
     targets: [
         .target(
+            name: "SBAppPortfolioCore"
+        ),
+        .target(
             name: "SBAppPortfolio",
+            dependencies: ["SBAppPortfolioCore"],
             resources: [
                 .process("Resources")
             ]
         ),
         .testTarget(
+            name: "SBAppPortfolioCoreTests",
+            dependencies: ["SBAppPortfolioCore"]
+        ),
+        .testTarget(
+            name: "SBAppPortfolioFacadeTests",
+            dependencies: ["SBAppPortfolio"]
+        ),
+        .testTarget(
             name: "SBAppPortfolioTests",
-            dependencies: ["SBAppPortfolio"],
+            dependencies: ["SBAppPortfolio", "SBAppPortfolioCore"],
             resources: [
                 .process("Fixtures")
             ]
