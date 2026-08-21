@@ -8,6 +8,7 @@ import SwiftUI
 /// Skeleton row shown while the lookup service is fetching metadata.
 /// Shape and spacing match ``SBAppPortfolioRowView`` so the layout
 /// does not shift when content arrives.
+@available(iOS 18.0, macOS 13.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 struct SBAppPortfolioRowLoadingView: View {
     private let placeholderColor = Color.gray.opacity(0.2)
 

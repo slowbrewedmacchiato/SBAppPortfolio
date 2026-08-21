@@ -9,6 +9,7 @@ import SwiftUI
 /// primary deployment target) and macOS (used for local Swift Testing).
 /// On iOS these map to the grouped-list UIKit colors; on macOS they fall
 /// back to semantic AppKit equivalents.
+@available(iOS 18.0, macOS 13.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension Color {
     /// Row card background on a grouped list.
     static var portfolioRowBackground: Color {
