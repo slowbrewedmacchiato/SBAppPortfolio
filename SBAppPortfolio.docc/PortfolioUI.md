@@ -33,7 +33,7 @@ SBAppPortfolioView(
 )
 ```
 
-When `onOpenApp` is nil, the package opens ``SBAppPortfolioItem/appStoreURL``. Supplying the closure transfers routing to the host, which can add analytics, use cross-promotion, or choose another destination without adding that dependency to SBAppPortfolio.
+When `onOpenApp` is nil, the package opens ``SBAppPortfolioItem/appStoreURL``. Supplying the closure transfers routing to the host, which can add analytics or choose another destination without coupling SBAppPortfolio to host-specific SDKs.
 
 Summary policies:
 
@@ -41,7 +41,7 @@ Summary policies:
 - ``SBAppPortfolioPresentation/SummaryPolicy/appStoreSubtitleThenFallback`` uses a nonempty raw subtitle, then curated fallback copy.
 - ``SBAppPortfolioPresentation/SummaryPolicy/fallbackOnly`` always uses the static description.
 
-## Compose the reusable row
+## Compose reusable UI pieces
 
 ``SBAppPortfolioRowView`` is public for hosts that want package styling inside their own list:
 
@@ -56,8 +56,22 @@ SBAppPortfolioRowView(
 
 The resolved item uses ``SBAppStoreApp/bestArtworkURL``, so the packaged row prefers 512-pixel artwork and falls back to 100 pixels.
 
+Use ``SBAppPortfolioActionPill`` when the host owns its row but wants the same tint-aware GET or price capsule:
+
+```swift
+Button(action: openApp) {
+    SBAppPortfolioActionPill()
+}
+
+Button(action: buyPaidApp) {
+    SBAppPortfolioActionPill(title: "$1.99")
+}
+```
+
+The pill owns presentation only. The surrounding button continues to own routing, analytics, and accessibility context.
+
 ## Platform and localization boundary
 
-The UI product is supported on iOS 18 and macOS 13 or newer. Its visible strings resolve from the package’s resource bundle and its semantic SwiftUI styling inherits the host’s tint.
+The complete packaged sheet and row are supported on iOS 18 and macOS 13 or newer. The action pill also supports iOS 16, macOS 11, and visionOS 1. Visible strings resolve from the package’s resource bundle and semantic SwiftUI styling inherits the host’s tint.
 
 For older platform floors or a design-system-owned view, use the Foundation-only Core product instead.

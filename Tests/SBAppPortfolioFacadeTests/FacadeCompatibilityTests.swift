@@ -40,4 +40,11 @@ struct FacadeCompatibilityTests {
 
         _ = fetch
     }
+
+    @Test("The reusable Store action pill supports GET and custom titles")
+    @MainActor
+    func actionPillInitializersCompile() {
+        _ = SBAppPortfolioActionPill()
+        _ = SBAppPortfolioActionPill(title: "$1.99")
+    }
 }

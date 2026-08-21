@@ -25,7 +25,7 @@ Add the repository with File ▸ Add Package Dependencies… or declare it in `P
 )
 ```
 
-Select `SBAppPortfolio` for the packaged UI or `SBAppPortfolioCore` for a Foundation-only client. Do not add both products to the same target; the UI product already depends on Core and preserves its original public names through explicit compatibility aliases.
+Select `SBAppPortfolio` for the packaged UI or `SBAppPortfolioCore` for a Foundation-only client. A UI-only target does not need to add Core separately because the UI product preserves its original public names through explicit compatibility aliases. A shared target that imports Core everywhere and UI only on supported platforms may declare both products with a SwiftPM platform condition.
 
 ## Present the packaged sheet
 
@@ -99,7 +99,7 @@ SBAppPortfolioView(
     configuration: configuration,
     presentation: presentation,
     onOpenApp: { item in
-        // Optional host routing, analytics, or cross-promotion.
+        // Optional host routing or analytics.
         // Without this closure, the view opens item.appStoreURL.
     }
 )
@@ -114,6 +114,20 @@ Summary policies behave as follows:
 | `.fallbackOnly` | Always use the host’s fallback description. |
 
 `SBAppPortfolioItem` is the resolved static/live model. `SBAppPortfolioRowView` can render it in a host-owned list while preserving package styling.
+
+`SBAppPortfolioActionPill` is the row's presentation-only GET or price capsule. It does not open URLs or record analytics, so a host can place it inside its own button:
+
+```swift
+Button(action: openApp) {
+    SBAppPortfolioActionPill()
+}
+
+Button(action: buyPaidApp) {
+    SBAppPortfolioActionPill(title: "$1.99")
+}
+```
+
+The pill supports iOS 16, macOS 11, and visionOS 1. The complete packaged sheet and row retain their iOS 18 and macOS 13 deployment floors.
 
 ## Build a custom interface with Core
 
@@ -154,7 +168,7 @@ let rows = visibleReferences.map { reference in
 }
 ```
 
-Keep the static list on screen while loading and on errors. Merge by numeric App Store ID rather than trusting response order. This preserves release flags, active-app behavior, product websites, review links, cross-promotion routing, and every other host-owned field.
+Keep the static list on screen while loading and on errors. Merge by numeric App Store ID rather than trusting response order. This preserves release flags, active-app behavior, product websites, review links, routing, and every other host-owned field.
 
 ### Subtitle caveat
 

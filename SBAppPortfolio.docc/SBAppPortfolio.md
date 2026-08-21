@@ -6,7 +6,7 @@ A batteries-included SwiftUI portfolio and a Foundation-only App Store lookup cl
 
 The package separates reusable lookup mechanics from host-owned product policy:
 
-- Add the `SBAppPortfolio` product for a localized “More From Us” sheet, static/live fallback resolution, and a reusable row.
+- Add the `SBAppPortfolio` product for a localized “More From Us” sheet, static/live fallback resolution, a reusable row, and the Store action pill.
 - Add the `SBAppPortfolioCore` product when the host owns catalog visibility, release state, ordering, fallback copy, routing, and UI.
 
 The full UI product depends on Core and preserves the original source surface with explicit compatibility aliases. A target importing `SBAppPortfolio` does not also need to import or link Core.
@@ -15,7 +15,7 @@ The full UI product depends on Core and preserves the original source surface wi
 
 ``SBAppPortfolioView`` accepts an ``SBAppPortfolioConfiguration`` and an optional ``SBAppPortfolioPresentation``. Its default presentation excludes the current app, sorts alphabetically, and shows the localized navigation, pricing, genre, Done, and developer-page elements from version 1.0.
 
-The view resolves every ``SBAppReference`` into an ``SBAppPortfolioItem``, retaining the static name and description whenever Apple omits an ID or lookup fails. Hosts can customize summary policy and chrome, intercept app opening, or compose the public ``SBAppPortfolioRowView`` themselves.
+The view resolves every ``SBAppReference`` into an ``SBAppPortfolioItem``, retaining the static name and description whenever Apple omits an ID or lookup fails. Hosts can customize summary policy and chrome, intercept app opening, or compose the public ``SBAppPortfolioRowView`` and ``SBAppPortfolioActionPill`` themselves.
 
 ### Foundation-only Core
 
@@ -52,6 +52,7 @@ For a completely custom interface, add only `SBAppPortfolioCore` and use ``SBApp
 
 - ``SBAppPortfolioView``
 - ``SBAppPortfolioRowView``
+- ``SBAppPortfolioActionPill``
 - ``SBAppPortfolioConfiguration``
 - ``SBAppPortfolioPresentation``
 - ``SBAppPortfolioItem``

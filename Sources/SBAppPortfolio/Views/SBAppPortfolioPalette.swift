@@ -29,22 +29,30 @@ extension Color {
         #endif
     }
 
-    /// Fill behind the GET / price action pill, matching the App Store's
-    /// neutral capsule. Pairs with tinted text supplied by the host.
-    static var portfolioActionPill: Color {
-        #if canImport(UIKit)
-        Color(uiColor: .tertiarySystemFill)
-        #else
-        Color(nsColor: .quaternaryLabelColor).opacity(0.5)
-        #endif
-    }
-
     /// Hairline separator stroke.
     static var portfolioHairline: Color {
         #if canImport(UIKit)
         Color(uiColor: .separator)
         #else
         Color(nsColor: .separatorColor)
+        #endif
+    }
+}
+
+extension Color {
+    /// Fill behind the GET / price action pill, matching the App Store's
+    /// neutral capsule. Pairs with tinted text supplied by the host.
+    static var portfolioActionPill: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .tertiarySystemFill)
+        #elseif canImport(AppKit)
+        if #available(macOS 12.0, *) {
+            Color(nsColor: .quaternaryLabelColor).opacity(0.5)
+        } else {
+            Color.secondary.opacity(0.12)
+        }
+        #else
+        Color.secondary.opacity(0.12)
         #endif
     }
 }

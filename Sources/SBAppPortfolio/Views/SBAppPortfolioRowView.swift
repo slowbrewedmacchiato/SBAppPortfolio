@@ -73,12 +73,7 @@ public struct SBAppPortfolioRowView: View {
                         // keeps the package theme-neutral, the pill adopts
                         // whatever accent the host applies to the sheet.
                         if showsPrice {
-                            Text(actionTitle)
-                                .font(.caption.weight(.bold))
-                                .foregroundStyle(.tint)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 6)
-                                .background(Capsule().fill(Color.portfolioActionPill))
+                            SBAppPortfolioActionPill(title: actionTitle)
                         }
                     }
 
