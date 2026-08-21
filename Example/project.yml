@@ -23,6 +23,8 @@ targets:
     dependencies:
       - package: SBAppPortfolio
         product: SBAppPortfolio
+      - package: SBAppPortfolio
+        product: SBAppPortfolioCore
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: studio.slowbrewed.example.thicket
