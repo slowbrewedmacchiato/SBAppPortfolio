@@ -5,21 +5,41 @@
 
 import SwiftUI
 
-/// A single app row in the "More From Us" sheet. Renders the live artwork
-/// and metadata from ``SBAppStoreApp``; tapping opens the App Store URL
-/// via the environment's `openURL`.
-struct SBAppPortfolioRowView: View {
-    let app: SBAppStoreApp
+/// A single app row for package-owned or host-owned portfolio UI.
+///
+/// The row renders resolved fallback/live metadata from
+/// ``SBAppPortfolioItem``. By default it opens the App Store destination from
+/// the environment; pass `onOpen` when a host owns routing or analytics.
+@available(iOS 18.0, macOS 13.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+public struct SBAppPortfolioRowView: View {
+    private let item: SBAppPortfolioItem
+    private let showsPrice: Bool
+    private let showsGenre: Bool
+    private let onOpen: (() -> Void)?
     @Environment(\.openURL) private var openURL
 
-    var body: some View {
+    public init(
+        item: SBAppPortfolioItem,
+        showsPrice: Bool = true,
+        showsGenre: Bool = true,
+        onOpen: (() -> Void)? = nil
+    ) {
+        self.item = item
+        self.showsPrice = showsPrice
+        self.showsGenre = showsGenre
+        self.onOpen = onOpen
+    }
+
+    public var body: some View {
         Button {
-            if let url = app.appStoreURL {
+            if let onOpen {
+                onOpen()
+            } else if let url = item.appStoreURL {
                 openURL(url)
             }
         } label: {
             HStack(spacing: 16) {
-                AsyncImage(url: app.artworkURL) { phase in
+                AsyncImage(url: item.artworkURL) { phase in
                     switch phase {
                     case .success(let image):
                         image.resizable().aspectRatio(contentMode: .fill)
@@ -40,7 +60,7 @@ struct SBAppPortfolioRowView: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(alignment: .top, spacing: 8) {
-                        Text(app.displayName)
+                        Text(item.name)
                             .font(.subheadline.weight(.medium))
                             .foregroundStyle(.primary)
                             .multilineTextAlignment(.leading)
@@ -52,25 +72,27 @@ struct SBAppPortfolioRowView: View {
                         // neutral capsule with bold tinted text. Using `.tint`
                         // keeps the package theme-neutral, the pill adopts
                         // whatever accent the host applies to the sheet.
-                        Text(app.isFree
-                            ? String(localized: "GET", bundle: .module, comment: "Portfolio row action label for free apps.")
-                            : app.displayPrice)
-                            .font(.caption.weight(.bold))
-                            .foregroundStyle(.tint)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 6)
-                            .background(Capsule().fill(Color.portfolioActionPill))
+                        if showsPrice {
+                            Text(actionTitle)
+                                .font(.caption.weight(.bold))
+                                .foregroundStyle(.tint)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 6)
+                                .background(Capsule().fill(Color.portfolioActionPill))
+                        }
                     }
 
-                    Text(app.displaySubtitle)
+                    Text(item.summary)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
 
-                    Text(app.primaryGenre)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
+                    if showsGenre, let genre = item.genre {
+                        Text(genre)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             .padding(.vertical, 8)
@@ -80,12 +102,28 @@ struct SBAppPortfolioRowView: View {
         .accessibilityLabel(
             Text(
                 String(
-                    localized: "Open \(app.displayName) on the App Store",
+                    localized: "Open \(item.name) on the App Store",
                     bundle: .module,
                     comment: "Accessibility label for a portfolio app row."
                 )
             )
         )
+    }
+
+    private var actionTitle: String {
+        if item.isFree {
+            return String(
+                localized: "GET",
+                bundle: .module,
+                comment: "Portfolio row action label for free apps."
+            )
+        }
+        return item.formattedPrice
+            ?? String(
+                localized: "Free",
+                bundle: .module,
+                comment: "Fallback price label when App Store lookup omits formatted price."
+            )
     }
 
     private var placeholderIcon: some View {
