@@ -2,7 +2,8 @@
 
 [![CI](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml)
 [![Swift 6.0](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
-[![Platforms](https://img.shields.io/badge/Core-iOS%2016%20%7C%20macOS%2011%20%7C%20watchOS%209%20%7C%20tvOS%2016%20%7C%20visionOS%201-blue.svg)](https://developer.apple.com)
+[![UI Platforms](https://img.shields.io/badge/UI%20sheet-iOS%2018%20%7C%20macOS%2013-purple.svg)](https://developer.apple.com)
+[![Core Platforms](https://img.shields.io/badge/Core-iOS%2016%20%7C%20macOS%2011%20%7C%20watchOS%209%20%7C%20tvOS%2016%20%7C%20visionOS%201-blue.svg)](https://developer.apple.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-DocC-informational.svg)](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio)
 
