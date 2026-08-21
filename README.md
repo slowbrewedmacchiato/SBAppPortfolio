@@ -2,136 +2,254 @@
 
 [![CI](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml)
 [![Swift 6.0](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
-[![Platforms](https://img.shields.io/badge/platforms-iOS%2018%20%7C%20macOS%2013-blue.svg)](https://developer.apple.com)
+[![Platforms](https://img.shields.io/badge/Core-iOS%2016%20%7C%20macOS%2011%20%7C%20watchOS%209%20%7C%20tvOS%2016%20%7C%20visionOS%201-blue.svg)](https://developer.apple.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-DocC-informational.svg)](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio)
 
-**A SwiftUI "More From Us" sheet for studios that ship more than one app.**
+**Live App Store metadata and a reusable “More From Us” experience for studios that ship more than one app.**
 
-Your users already trust you. This is the screen that tells them what else you make: a settings sheet listing your other apps with their real icons, names, subtitles, and prices, pulled live from the App Store so nothing goes stale when you rename an app or change a price.
+SBAppPortfolio now ships two library products:
 
-The app it runs in excludes itself. The sheet inherits your app's tint instead of imposing its own look. It ships localized and depends on nothing.
+| Product | Use it when | Platforms |
+| --- | --- | --- |
+| `SBAppPortfolioCore` | Your app or design system owns the catalog, fallback copy, ordering, routing, and UI. Core performs a typed, batched iTunes Lookup request and returns raw metadata. | iOS 16+, macOS 11+, watchOS 9+, tvOS 16+, visionOS 1+ |
+| `SBAppPortfolio` | You want the localized, batteries-included SwiftUI sheet and optional reusable row. It depends on Core and preserves the original 1.0 integration. | iOS 18+, macOS 13+ |
 
-Extracted from six Slow Brewed apps that had each grown their own copy of this screen.
+Both products add no external runtime dependencies. The Core product imports Foundation only; it does not own presentation policy or SwiftUI.
 
 ## Requirements
 
-- iOS 18.0+ / macOS 13.0+ (macOS only for local development and testing)
 - Swift 6.0+
 - Xcode 16+
+- A deployment target supported by the product selected above
 
 ## Installation
 
-Add the package as a dependency in Xcode (File ▸ Add Package Dependencies…) or in your `Package.swift`:
+Add the package in Xcode with File ▸ Add Package Dependencies… or declare it in `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/slowbrewedmacchiato/SBAppPortfolio.git", from: "1.0.0")
+.package(
+    url: "https://github.com/slowbrewedmacchiato/SBAppPortfolio.git",
+    from: "1.1.0"
+)
 ```
 
-Add `SBAppPortfolio` to your target's dependencies.
+Add one product to the consuming target:
 
-## Quick start
+- `SBAppPortfolio` for the packaged UI; Core is linked transitively.
+- `SBAppPortfolioCore` for a custom interface without the UI resources.
 
-Define your studio's apps, pass the current app's ID so it's excluded from the list, and present the sheet:
+## Packaged SwiftUI sheet
+
+Define the studio catalog, identify the current app, and present the sheet:
 
 ```swift
 import SBAppPortfolio
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var showPortfolio = false
+    @State private var showsPortfolio = false
 
     var body: some View {
-        Button("More From Us") { showPortfolio = true }
-            .sheet(isPresented: $showPortfolio) {
-                SBAppPortfolioView(
-                    configuration: SBAppPortfolioConfiguration(
-                        studioApps: [
-                            SBAppReference(appID: "1234567890", fallbackName: "My First App", fallbackDescription: "A great app."),
-                            SBAppReference(appID: "0987654321", fallbackName: "My Second App", fallbackDescription: "Another great app.")
-                        ],
-                        currentAppID: "1234567890",
-                        developerPageURL: URL(string: "https://apps.apple.com/developer/id000000000")!
-                    )
+        Button("More From Us") {
+            showsPortfolio = true
+        }
+        .sheet(isPresented: $showsPortfolio) {
+            SBAppPortfolioView(
+                configuration: SBAppPortfolioConfiguration(
+                    studioApps: [
+                        SBAppReference(
+                            appID: "1234567890",
+                            fallbackName: "My First App",
+                            fallbackDescription: "A carefully written product summary."
+                        ),
+                        SBAppReference(
+                            appID: "0987654321",
+                            fallbackName: "My Second App",
+                            fallbackDescription: "Useful even while the device is offline."
+                        )
+                    ],
+                    currentAppID: "1234567890",
+                    developerPageURL: URL(
+                        string: "https://apps.apple.com/developer/id000000000"
+                    )!
                 )
-            }
+            )
+        }
     }
 }
 ```
 
-The sheet fetches live metadata (icon, name, subtitle, price, genre) for every app in a single batched iTunes Lookup request, caches the results for one hour, and renders a neutral SwiftUI list. A pull-to-refresh clears the cache and re-fetches. A "View All Our Apps" footer links to your developer page.
+The default `SBAppPortfolioPresentation.standard` preserves the original sheet: it excludes the current app, sorts alphabetically, shows price, genre, Done, and developer-page rows, and derives a short description when Apple omits the subtitle.
 
-## Features
-
-- **Live App Store metadata** via the iTunes Lookup API (single batched request for all apps)
-- **Runtime self-exclusion**: pass `currentAppID` and the host app is filtered out automatically; no per-app omission lists to maintain
-- **Configurable storefront**: pass `lookupCountry` (ISO code) so users in non-US regions see localized metadata and prices
-- **Locale-independent free-app detection**: uses the numeric `price` field, not the localized `formattedPrice` string, so the GET pill renders correctly in every storefront
-- **Resilient decoding**: a malformed entry in the lookup response is dropped, not propagated; one bad sibling app doesn't blank the sheet
-- **Bundled localization**: translations ship inside the package, so a host app gets them with no setup
-- **Neutral SwiftUI**: system semantic colors and SF Symbols; apply your own theme via standard view modifiers
-- **Swift Testing**: mock JSON fixtures covering parsing, configuration, cache behavior, and error mapping
-
-## Configuration
+Configure only the policy your host owns:
 
 ```swift
-SBAppPortfolioConfiguration(
-    studioApps: [...],          // your studio catalog
-    currentAppID: "your-app-id", // excluded from the displayed list
-    developerPageURL: URL(...),  // your App Store developer page
-    lookupCountry: "us",         // optional; default "us"
-    urlSession: .shared          // optional; inject for testing
+SBAppPortfolioView(
+    configuration: configuration,
+    presentation: SBAppPortfolioPresentation(
+        currentAppBehavior: .include,
+        ordering: .catalog,
+        summaryPolicy: .appStoreSubtitleThenFallback,
+        showsDoneButton: false,
+        showsDeveloperLink: false,
+        showsPrice: false,
+        showsGenre: true,
+        navigationTitle: "Our Apps",
+        sectionTitle: "Made by Our Studio",
+        sectionFooter: ""
+    ),
+    onOpenApp: { item in
+        // Optional host-owned routing, analytics, or cross-promotion.
+        // When omitted, the package opens item.appStoreURL.
+    }
 )
 ```
 
-### Slow Brewed catalog
+`SBAppPortfolioItem` merges every static reference with optional Store metadata, so a missing result or network failure never removes the host’s fallback row. `SBAppPortfolioRowView` is public for hosts that want the resolved package row inside their own composition.
 
-If you're shipping a Slow Brewed app, use the built-in catalog and developer page URL:
+Slow Brewed apps can use the built-in catalog and developer page:
 
 ```swift
-SBAppPortfolioView(configuration: .slowBrewed(currentAppID: "your-app-id"))
+SBAppPortfolioView(
+    configuration: .slowBrewed(currentAppID: "your-app-id")
+)
 ```
+
+## Custom UI with SBAppPortfolioCore
+
+Core accepts raw App Store IDs and does not exclude the current app, hide unreleased products, sort a catalog, or choose fallback copy. Those policies remain in the host:
+
+```swift
+import Foundation
+import SBAppPortfolioCore
+
+let references = [
+    SBAppReference(
+        appID: "1234567890",
+        fallbackName: "My First App",
+        fallbackDescription: "Curated copy owned by the host."
+    ),
+    SBAppReference(
+        appID: "0987654321",
+        fallbackName: "My Second App",
+        fallbackDescription: "The complete offline fallback."
+    )
+]
+
+let service = SBAppStoreLookupService()
+let result = try await service.fetchApps(
+    for: SBAppLookupRequest(
+        appIDs: references.map(\.appID),
+        countryCode: "de",
+        ordering: .caller
+    )
+)
+
+let metadataByID = Dictionary(
+    uniqueKeysWithValues: result.apps.map { (String($0.trackId), $0) }
+)
+
+func nonempty(_ value: String?) -> String? {
+    let trimmed = value?.trimmingCharacters(in: .whitespacesAndNewlines)
+    return trimmed?.isEmpty == false ? trimmed : nil
+}
+
+let rows = references.map { reference in
+    let storeApp = metadataByID[reference.appID]
+    return (
+        name: nonempty(storeApp?.trackCensoredName)
+            ?? nonempty(storeApp?.trackName)
+            ?? reference.fallbackName,
+        summary: nonempty(storeApp?.subtitle)
+            ?? reference.fallbackDescription,
+        artworkURL: storeApp?.bestArtworkURL,
+        destinationURL: storeApp?.appStoreURL
+    )
+}
+```
+
+The example app contains a complete host-owned implementation in `CorePortfolioDemoView`.
+
+### Subtitle and fallback policy
+
+The iTunes Lookup API frequently omits the App Store subtitle. For intentional product copy, read the raw optional `subtitle` and keep the host’s curated description when it is nil or empty. `displaySubtitle` is a convenience that may derive text from the long Store description; do not use it when preserving curated copy matters.
+
+### Artwork and destinations
+
+- `bestArtworkURL` prefers `artworkUrl512` and falls back to `artworkUrl100`.
+- `artworkURL` remains the original 100-pixel compatibility accessor.
+- `appStoreURL` parses Apple’s current `trackViewUrl`.
+
+## Lookup contract
+
+`SBAppStoreLookupService` performs one request for all IDs and filters the response to the requested set.
+
+- IDs are trimmed and de-duplicated by first occurrence.
+- Country codes are trimmed, lowercased, and validated as two ASCII letters.
+- `.caller` preserves the normalized input order (`.input` is an alias).
+- `.displayName` sorts resolved results by name.
+- `.response` preserves Apple’s response order.
+- Unexpected and duplicate response entries are discarded.
+- `missingAppIDs` reports requested IDs that Apple did not return, in caller order.
+- `source` distinguishes `.network`, `.freshCache`, and `.staleCache`.
+
+The public `SBAppStoreLookupClient` protocol makes the lookup injectable in previews and tests. `SBAppStoreApp` and `SBAppLookupResult` have public initializers for fixtures.
+
+## Cache, refresh, and cancellation
+
+`SBAppLookupCachePolicy.standard` keeps decoded metadata for one hour and permits stale metadata when a refresh fails. Supply a custom policy or `.disabled` when needed:
+
+```swift
+let service = SBAppStoreLookupService(
+    cachePolicy: SBAppLookupCachePolicy(
+        timeToLive: 15 * 60,
+        allowsStaleDataOnError: true
+    )
+)
+```
+
+The default shared URL session uses a process-wide decoded cache. A custom `URLSession` receives an isolated decoded cache so test or authenticated traffic cannot contaminate other clients. Core bypasses `URLCache` after its decoded cache misses.
+
+Use targeted invalidation for one normalized request and `clearCache()` only when every entry should be evicted:
+
+```swift
+try await service.invalidateCache(for: request)
+let refreshed = try await service.fetchApps(for: request)
+```
+
+Invalidation generations prevent an older in-flight response from repopulating an entry that was just removed. Cancellation stops the back-deployed URLSession task and surfaces `SBAppPortfolioError.requestCancelled`; cancellation never falls back to stale data.
 
 ## Storefront
 
-By default the package queries the US storefront. Pass a different ISO country code to show users their local metadata and prices:
+The default storefront is `us`. Pass the device’s storefront or another two-letter country code for localized Store metadata and prices. You can obtain it with StoreKit 2 (`await Storefront.current?.countryCode`) or StoreKit 1 (`SKPaymentQueue.default().storefront?.countryCode`). SBAppPortfolio does not depend on StoreKit.
 
-```swift
-SBAppPortfolioConfiguration(
-    studioApps: [...],
-    currentAppID: "your-app-id",
-    developerPageURL: URL(...),
-    lookupCountry: "jp"
-)
-```
+## Theming and localization
 
-For automatic device-storefront detection, read `await Storefront.current?.countryCode` (StoreKit 2), or `SKPaymentQueue.default().storefront?.countryCode` on StoreKit 1, and pass the result. The package does not depend on StoreKit to keep its dependency surface minimal.
+The packaged sheet uses semantic SwiftUI colors and SF Symbols, and inherits the host’s `tint`. Its `Localizable.xcstrings` currently covers en, de, es, fr, ja, ko, pt-BR, and zh-Hans. Core contains no UI resources; custom interfaces own their visible fallback and error copy.
 
-## Theming
+## Documentation and development
 
-The sheet renders in neutral SwiftUI, system semantic colors (`Color.primary`, `Color.secondary`, grouped-list backgrounds) and SF Symbols. Apply your app's theme via standard view modifiers on `SBAppPortfolioView`.
+- [Getting Started](Docs/GettingStarted.md)
+- [SBAppPortfolio UI API reference](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio)
+- [SBAppPortfolioCore API reference](https://slowbrewedmacchiato.github.io/SBAppPortfolio/core/documentation/sbappportfoliocore)
+- [Contributing](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
 
-## Localization
-
-The package ships `Localizable.xcstrings`, currently covering en, de, es, fr, ja, ko, pt-BR, and zh-Hans. Strings used by the sheet resolve from the package's own bundle (`bundle: .module`), so no host-side string copying is needed.
-
-To add a locale, extend `Localizable.xcstrings` and open a PR. CI fails the build if any key is missing a translation, or carries an empty one, in a locale the catalog declares.
-
-## Documentation
-
-Full integration guide: [`Docs/GettingStarted.md`](Docs/GettingStarted.md)
-
-API reference: [slowbrewedmacchiato.github.io/SBAppPortfolio](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio), rebuilt from source on every push to `main`.
-
-Contributing: [CONTRIBUTING.md](CONTRIBUTING.md). Security issues: [SECURITY.md](SECURITY.md).
-
-The published site is built and deployed by CI. To preview it locally before opening a PR:
+Run the complete package tests with:
 
 ```bash
-SBAPP_PORTFOLIO_DEVELOPMENT=1 swift package generate-documentation
+swift test
 ```
 
-`swift-docc-plugin` is gated behind `SBAPP_PORTFOLIO_DEVELOPMENT` so it stays out of consumers' package graphs. Set the variable to opt in; CI sets it for the documentation job.
+Preview both DocC sites locally:
+
+```bash
+SBAPP_PORTFOLIO_DEVELOPMENT=1 swift package generate-documentation --target SBAppPortfolio
+SBAPP_PORTFOLIO_DEVELOPMENT=1 swift package generate-documentation --target SBAppPortfolioCore
+```
+
+The DocC plugin is gated behind `SBAPP_PORTFOLIO_DEVELOPMENT`, so it does not propagate into consumer package graphs.
 
 ## License
 

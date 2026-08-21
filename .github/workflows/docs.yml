@@ -25,7 +25,7 @@ jobs:
 
       # swift-docc-plugin is gated behind SBAPP_PORTFOLIO_DEVELOPMENT so it
       # stays out of consumers' package graphs. Opt in for this job only.
-      - name: Generate documentation
+      - name: Generate packaged UI documentation
         env:
           SBAPP_PORTFOLIO_DEVELOPMENT: "1"
         run: |
@@ -36,6 +36,21 @@ jobs:
             --transform-for-static-hosting \
             --hosting-base-path SBAppPortfolio \
             --output-path ./docs-site
+
+      - name: Generate Core documentation
+        env:
+          SBAPP_PORTFOLIO_DEVELOPMENT: "1"
+        run: |
+          swift package --allow-writing-to-directory ./docs-core \
+            generate-documentation \
+            --target SBAppPortfolioCore \
+            --disable-indexing \
+            --transform-for-static-hosting \
+            --hosting-base-path SBAppPortfolio/core \
+            --output-path ./docs-core
+
+          mkdir -p ./docs-site/core
+          cp -R ./docs-core/. ./docs-site/core/
 
       # Pages serves the site root, but DocC's entry point is nested. Redirect
       # so the bare repository URL lands on the documentation instead of a 404.
