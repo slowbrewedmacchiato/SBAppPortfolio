@@ -1,7 +1,7 @@
 //  SBAppPortfolioError.swift
 //  SBAppPortfolioCore
 //
-//  Created by Angelo Cammalleri on 2026-08-21.
+//  Created by Slow Brewed Studio on 2026-08-18.
 
 import Foundation
 

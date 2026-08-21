@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   row metadata visibility, and custom section copy.
 - Public `SBAppPortfolioItem` and `SBAppPortfolioRowView` seams for hosts that
   want package fallback resolution or row styling inside their own surface.
+- Public `SBAppPortfolioActionPill` for reusing the package's localized,
+  tint-aware GET or formatted-price presentation inside host-owned buttons.
 - A Core-only Thicket example that preserves host ordering and curated copy
   while overlaying live Store metadata by App Store ID.
 
@@ -39,14 +41,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   its existing public model and service names through explicit type aliases
   and its original configuration-based fetch overload.
 - The packaged view retains fallback rows when Apple omits an ID or lookup
-  fails, and supports host-owned routing without depending on cross-promotion
-  libraries.
+  fails, and supports host-owned routing without depending on host-specific
+  SDKs.
 - Package platform floors now match Core consumers; newer SwiftUI availability
   remains explicit on the packaged UI product.
 - Lookup cache misses bypass URLSession's local response cache so targeted
   refresh reaches Apple rather than being satisfied by stale transport data.
 - Documentation and CI distinguish the Core and packaged-UI adoption paths and
   verify Core at every declared minimum platform floor.
+- The README again leads with the original package description and now shows
+  English screenshots of both the packaged sheet and a Core-backed custom UI.
 
 ## [1.0.0] - 2026-08-18
 

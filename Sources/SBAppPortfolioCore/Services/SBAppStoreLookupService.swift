@@ -1,11 +1,18 @@
 //  SBAppStoreLookupService.swift
 //  SBAppPortfolioCore
 //
-//  Created by Angelo Cammalleri on 2026-08-21.
+//  Created by Slow Brewed Studio on 2026-08-18.
 
 import Foundation
 
-/// Fetches live App Store metadata with a batched iTunes Lookup request.
+/// Fetches live App Store metadata through the iTunes Lookup API. A request
+/// sends every App Store ID as one comma-separated batch, so fetching several
+/// sibling apps remains one HTTP call rather than one call per app.
+///
+/// Shared-session clients also share the package cache. It survives view
+/// reinitialization and sheet dismissal, preserving the original package's
+/// one-hour cache behavior while the Core API additionally supports explicit
+/// cache policy and invalidation.
 public struct SBAppStoreLookupService: SBAppStoreLookupClient, Sendable {
     private let urlSession: URLSession
     private let cache: SBAppStoreLookupCache

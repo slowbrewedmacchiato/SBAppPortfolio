@@ -1,11 +1,15 @@
 //  SBAppStoreApp.swift
 //  SBAppPortfolioCore
 //
-//  Created by Angelo Cammalleri on 2026-08-21.
+//  Created by Slow Brewed Studio on 2026-08-18.
 
 import Foundation
 
-/// A single app's live metadata decoded from Apple's iTunes Lookup API.
+/// A single app's live App Store metadata, decoded from the iTunes Lookup API.
+///
+/// All field names match the iTunes Lookup JSON keys exactly. Computed
+/// helpers normalize display values (name, price, subtitle, genre) with
+/// sensible fallbacks.
 public struct SBAppStoreApp: Codable, Identifiable, Sendable, Equatable {
     public let trackId: Int
     public let trackName: String?
@@ -74,7 +78,14 @@ public struct SBAppStoreApp: Codable, Identifiable, Sendable, Equatable {
         formattedPrice ?? "Free"
     }
 
-    /// A locale-independent signal that the app is free.
+    /// Locale-independent signal that the app is free. Based on the numeric
+    /// `price` field (0 for free apps) rather than the localized
+    /// `formattedPrice` string ("Free" / "Gratis" / "無料" / etc.), so a
+    /// GET pill renders correctly regardless of the requested storefront.
+    ///
+    /// Some App Store entries omit `price` *and* `formattedPrice` entirely.
+    /// A paid app always reports a price, so an entry carrying no price data
+    /// is treated as free.
     public var isFree: Bool {
         if let price { return price == 0 }
         return formattedPrice == nil
@@ -131,8 +142,10 @@ public struct SBAppStoreApp: Codable, Identifiable, Sendable, Equatable {
 
 /// Envelope returned by the iTunes Lookup endpoint.
 ///
-/// Every result element decodes independently, so one malformed entry does
-/// not invalidate the rest of a batched response.
+/// Decodes `results` with per-element isolation: a single malformed entry
+/// (missing required field, wrong type, etc.) is dropped rather than failing
+/// the whole batch. This matters for a batched lookup where one bad sibling
+/// app payload would otherwise blank the entire result.
 struct SBAppStoreLookupResponse: Codable, Sendable {
     let resultCount: Int
     let results: [SBAppStoreApp]
@@ -152,6 +165,13 @@ struct SBAppStoreLookupResponse: Codable, Sendable {
 
         var unkeyed = try container.nestedUnkeyedContainer(forKey: .results)
         var apps: [SBAppStoreApp] = []
+        // `superDecoder()` returns a fresh decoder for the current element and
+        // advances the iterator, so each element decodes in isolation. A
+        // malformed entry is dropped via `try?` rather than failing the batch.
+        //
+        // Do not pre-size `apps` from `resultCount`: it is untrusted network
+        // data, and a hostile value could cause a fatal allocation before the
+        // isolated decoding loop begins.
         while !unkeyed.isAtEnd {
             let elementDecoder = try unkeyed.superDecoder()
             if let app = try? SBAppStoreApp(from: elementDecoder) {

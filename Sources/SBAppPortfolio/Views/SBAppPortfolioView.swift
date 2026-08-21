@@ -8,7 +8,10 @@ import SwiftUI
 import UIKit
 #endif
 
-/// The batteries-included "More From Us" sheet.
+/// The "More From Us" sheet. Presents a studio catalog with live App Store
+/// metadata, loading skeletons, a resilient fallback state, and a footer link
+/// to the developer's App Store page. It renders in neutral SwiftUI, so the
+/// host can apply its own theme through standard view modifiers.
 ///
 /// The default presentation preserves the original package UI. Advanced hosts
 /// can configure its chrome and row metadata, inject opening behavior, or
