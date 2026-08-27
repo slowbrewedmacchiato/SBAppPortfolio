@@ -191,7 +191,7 @@ struct SettingsScreen: View {
     }
 
     private var versionFooter: some View {
-        Text(String(localized: "Thicket 1.0 · Example app for SBAppPortfolio", comment: "Version footer at the bottom of the settings screen."))
+        Text(String(localized: "Example app for SBAppPortfolio", comment: "Footer at the bottom of the settings screen."))
             .roundedFont(.caption2)
             .foregroundStyle(.tertiary)
             .multilineTextAlignment(.center)
