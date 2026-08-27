@@ -3,6 +3,7 @@
   "strings" : {
     "App" : {
       "comment" : "Fallback genre label for portfolio rows.\nFallback name label when App Store lookup omits track name.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -56,6 +57,7 @@
     },
     "App Store request failed with code %lld" : {
       "comment" : "Portfolio lookup HTTP error.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -161,7 +163,7 @@
       }
     },
     "Couldn't refresh. Showing your last saved apps." : {
-      "comment" : "Portfolio refresh-failure banner shown when a pull-to-refresh fails but stale content remains.",
+      "comment" : "Portfolio refresh-failure banner shown while cached or fallback app details remain visible.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -321,6 +323,7 @@
     },
     "Failed to parse App Store data" : {
       "comment" : "Portfolio lookup error.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -480,6 +483,7 @@
     },
     "Invalid App Store URL" : {
       "comment" : "Portfolio lookup error.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -533,6 +537,7 @@
     },
     "Invalid response from App Store" : {
       "comment" : "Portfolio lookup error.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -639,6 +644,7 @@
     },
     "Network error: %@" : {
       "comment" : "Portfolio lookup network error.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -904,6 +910,7 @@
     },
     "Request was cancelled" : {
       "comment" : "Portfolio lookup error.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1010,6 +1017,7 @@
     },
     "Try Again" : {
       "comment" : "Portfolio retry button.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1063,6 +1071,7 @@
     },
     "Unable to load apps" : {
       "comment" : "Portfolio error title.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -2,7 +2,8 @@
 
 [![CI](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/slowbrewedmacchiato/SBAppPortfolio/actions/workflows/ci.yml)
 [![Swift 6.0](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
-[![Platforms](https://img.shields.io/badge/platforms-iOS%2018%20%7C%20macOS%2013-blue.svg)](https://developer.apple.com)
+[![UI Platforms](https://img.shields.io/badge/UI%20sheet-iOS%2018%20%7C%20macOS%2013-purple.svg)](https://developer.apple.com)
+[![Core Platforms](https://img.shields.io/badge/Core-iOS%2016%20%7C%20macOS%2011%20%7C%20watchOS%209%20%7C%20tvOS%2016%20%7C%20visionOS%201-blue.svg)](https://developer.apple.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-DocC-informational.svg)](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio)
 
@@ -14,9 +15,32 @@ The app it runs in excludes itself. The sheet inherits your app's tint instead o
 
 Extracted from six Slow Brewed apps that had each grown their own copy of this screen.
 
+## What it looks like
+
+<table>
+  <tr>
+    <th><code>SBAppPortfolio</code><br>Ready-made SwiftUI sheet</th>
+    <th><code>SBAppPortfolioCore</code><br>The same metadata in your own UI</th>
+  </tr>
+  <tr>
+    <td><img src="Docs/Images/sbappportfolio-sheet-en.png" alt="English SBAppPortfolio sheet showing live app icons, names, summaries, and GET buttons" width="360"></td>
+    <td><img src="Docs/Images/sbappportfolio-core-en.png" alt="English custom app list powered by SBAppPortfolioCore" width="360"></td>
+  </tr>
+</table>
+
+## Choose a product
+
+| Product | Use it when | Platforms |
+| --- | --- | --- |
+| `SBAppPortfolio` | You want the localized, batteries-included SwiftUI sheet, reusable row, or Store action pill. It depends on Core and preserves the original integration. | iOS 18+, macOS 13+ for the complete sheet; the action pill also supports iOS 16+, macOS 11+, and visionOS 1+ |
+| `SBAppPortfolioCore` | Your app or design system owns the catalog, fallback copy, ordering, routing, and UI. Core performs a typed, batched iTunes Lookup request and returns raw metadata. | iOS 16+, macOS 11+, watchOS 9+, tvOS 16+, visionOS 1+ |
+
+Both products add no external runtime dependencies. The Core product imports Foundation only; it does not own presentation policy or SwiftUI.
+
 ## Requirements
 
-- iOS 18.0+ / macOS 13.0+ (macOS only for local development and testing)
+- iOS 18.0+ / macOS 13.0+ for the complete SwiftUI sheet (macOS only for local development and testing)
+- iOS 16.0+ / macOS 11.0+ / watchOS 9.0+ / tvOS 16.0+ / visionOS 1.0+ for Core
 - Swift 6.0+
 - Xcode 16+
 
@@ -25,10 +49,10 @@ Extracted from six Slow Brewed apps that had each grown their own copy of this s
 Add the package as a dependency in Xcode (File ▸ Add Package Dependencies…) or in your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/slowbrewedmacchiato/SBAppPortfolio.git", from: "1.0.0")
+.package(url: "https://github.com/slowbrewedmacchiato/SBAppPortfolio.git", from: "1.1.0")
 ```
 
-Add `SBAppPortfolio` to your target's dependencies.
+Add `SBAppPortfolio` to your target's dependencies for the packaged UI and reusable SwiftUI pieces, or add `SBAppPortfolioCore` for a Foundation-only lookup client.
 
 ## Quick start
 
@@ -61,6 +85,22 @@ struct SettingsView: View {
 
 The sheet fetches live metadata (icon, name, subtitle, price, genre) for every app in a single batched iTunes Lookup request, caches the results for one hour, and renders a neutral SwiftUI list. A pull-to-refresh clears the cache and re-fetches. A "View All Our Apps" footer links to your developer page.
 
+The default `SBAppPortfolioPresentation.standard` preserves this behavior. Advanced hosts can selectively configure the sheet chrome, catalog order, summary policy, and opening behavior without replacing the original UI.
+
+### Reusable UI pieces
+
+`SBAppPortfolioRowView` renders a resolved `SBAppPortfolioItem` inside a host-owned composition. `SBAppPortfolioActionPill` exposes the same neutral, tint-aware GET or price capsule without taking ownership of the surrounding button:
+
+```swift
+Button(action: openApp) {
+    SBAppPortfolioActionPill()
+}
+
+Button(action: buyPaidApp) {
+    SBAppPortfolioActionPill(title: "$1.99")
+}
+```
+
 ## Features
 
 - **Live App Store metadata** via the iTunes Lookup API (single batched request for all apps)
@@ -71,6 +111,8 @@ The sheet fetches live metadata (icon, name, subtitle, price, genre) for every a
 - **Bundled localization**: translations ship inside the package, so a host app gets them with no setup
 - **Neutral SwiftUI**: system semantic colors and SF Symbols; apply your own theme via standard view modifiers
 - **Swift Testing**: mock JSON fixtures covering parsing, configuration, cache behavior, and error mapping
+- **Foundation-only Core**: build a completely custom interface without linking the packaged UI
+- **Reusable presentation pieces**: compose the package row or Store action pill into a host-owned screen
 
 ## Configuration
 
@@ -84,6 +126,24 @@ SBAppPortfolioConfiguration(
 )
 ```
 
+Configure only the presentation policy that your host owns:
+
+```swift
+SBAppPortfolioView(
+    configuration: configuration,
+    presentation: SBAppPortfolioPresentation(
+        currentAppBehavior: .include,
+        ordering: .catalog,
+        summaryPolicy: .appStoreSubtitleThenFallback,
+        showsDoneButton: false,
+        showsDeveloperLink: false
+    ),
+    onOpenApp: { item in
+        // Optional host-owned routing or analytics.
+    }
+)
+```
+
 ### Slow Brewed catalog
 
 If you're shipping a Slow Brewed app, use the built-in catalog and developer page URL:
@@ -91,6 +151,24 @@ If you're shipping a Slow Brewed app, use the built-in catalog and developer pag
 ```swift
 SBAppPortfolioView(configuration: .slowBrewed(currentAppID: "your-app-id"))
 ```
+
+## Custom UI with Core
+
+Add only `SBAppPortfolioCore` when your app owns the catalog and presentation. Core accepts App Store IDs and returns raw metadata without deciding which apps are active, released, visible, or promoted:
+
+```swift
+import SBAppPortfolioCore
+
+let result = try await SBAppStoreLookupService().fetchApps(
+    for: SBAppLookupRequest(
+        appIDs: references.map(\.appID),
+        countryCode: "us",
+        ordering: .caller
+    )
+)
+```
+
+Merge the result into your static catalog by App Store ID and retain your fallback name, description, icon, and destination when Apple omits a value. The example app includes a complete host-owned implementation; the [Getting Started guide](Docs/GettingStarted.md) documents cache, cancellation, subtitle, artwork, and result semantics.
 
 ## Storefront
 
@@ -111,6 +189,8 @@ For automatic device-storefront detection, read `await Storefront.current?.count
 
 The sheet renders in neutral SwiftUI, system semantic colors (`Color.primary`, `Color.secondary`, grouped-list backgrounds) and SF Symbols. Apply your app's theme via standard view modifiers on `SBAppPortfolioView`.
 
+The reusable action pill also inherits the host's tint and deliberately leaves routing and button style to its caller.
+
 ## Localization
 
 The package ships `Localizable.xcstrings`, currently covering en, de, es, fr, ja, ko, pt-BR, and zh-Hans. Strings used by the sheet resolve from the package's own bundle (`bundle: .module`), so no host-side string copying is needed.
@@ -121,14 +201,15 @@ To add a locale, extend `Localizable.xcstrings` and open a PR. CI fails the buil
 
 Full integration guide: [`Docs/GettingStarted.md`](Docs/GettingStarted.md)
 
-API reference: [slowbrewedmacchiato.github.io/SBAppPortfolio](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio), rebuilt from source on every push to `main`.
+API reference: [SBAppPortfolio UI](https://slowbrewedmacchiato.github.io/SBAppPortfolio/documentation/sbappportfolio) and [SBAppPortfolioCore](https://slowbrewedmacchiato.github.io/SBAppPortfolio/core/documentation/sbappportfoliocore), rebuilt from source on every push to `main`.
 
 Contributing: [CONTRIBUTING.md](CONTRIBUTING.md). Security issues: [SECURITY.md](SECURITY.md).
 
-The published site is built and deployed by CI. To preview it locally before opening a PR:
+The published site is built and deployed by CI. To preview both documentation targets locally before opening a PR:
 
 ```bash
-SBAPP_PORTFOLIO_DEVELOPMENT=1 swift package generate-documentation
+SBAPP_PORTFOLIO_DEVELOPMENT=1 swift package generate-documentation --target SBAppPortfolio
+SBAPP_PORTFOLIO_DEVELOPMENT=1 swift package generate-documentation --target SBAppPortfolioCore
 ```
 
 `swift-docc-plugin` is gated behind `SBAPP_PORTFOLIO_DEVELOPMENT` so it stays out of consumers' package graphs. Set the variable to opt in; CI sets it for the documentation job.

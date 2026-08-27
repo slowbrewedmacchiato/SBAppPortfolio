@@ -7,6 +7,7 @@ import Testing
 import Foundation
 import os
 @testable import SBAppPortfolio
+@testable import SBAppPortfolioCore
 
 @Suite("Lookup service", .serialized)
 struct ServiceTests {
@@ -277,24 +278,19 @@ struct ServiceTests {
             urlSession: session
         )
 
-        // Wipe the shared cache first so the test is hermetic.
-        await SBAppStoreLookupCache.shared.clear()
-
-        let serviceA = SBAppStoreLookupService(urlSession: session)
+        let cache = SBAppStoreLookupCache()
+        let serviceA = SBAppStoreLookupService(urlSession: session, cache: cache)
         _ = try await serviceA.fetchApps(for: config) // network
 
-        // New service instance, same shared cache, should hit, not network.
-        let serviceB = SBAppStoreLookupService(urlSession: session)
+        // New service instance, same cache actor, should hit, not network.
+        let serviceB = SBAppStoreLookupService(urlSession: session, cache: cache)
         let apps = try await serviceB.fetchApps(for: config)
 
-        // The stub returns the full 2-app batch fixture regardless of the
-        // requested ID; the point of this test is the network-call count, not
-        // the app count.
-        #expect(apps.count == 2)
+        // The Core service rejects unexpected response IDs, so only the app
+        // requested by this configuration survives the two-app fixture.
+        #expect(apps.count == 1)
         #expect(counter.withLock { $0 } == 1)
 
-        // Clean up so the shared cache doesn't leak to subsequent tests.
-        await SBAppStoreLookupCache.shared.clear()
     }
 }
 

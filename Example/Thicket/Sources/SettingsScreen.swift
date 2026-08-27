@@ -21,6 +21,7 @@ struct SettingsScreen: View {
     enum PortfolioKind: String, Identifiable {
         case custom
         case slowBrewed
+        case core
 
         var id: String { rawValue }
     }
@@ -47,11 +48,20 @@ struct SettingsScreen: View {
         .sheet(item: $presentedPortfolio) { kind in
             switch kind {
             case .custom:
-                SBAppPortfolioView(configuration: .thicket)
+                SBAppPortfolioView(
+                    configuration: .thicket,
+                    presentation: SBAppPortfolioPresentation(
+                        ordering: .catalog,
+                        summaryPolicy: .appStoreSubtitleThenFallback,
+                        showsGenre: false
+                    )
+                )
                     .tint(ThicketPalette.moss(for: scheme))
             case .slowBrewed:
                 SBAppPortfolioView(configuration: .slowBrewed(currentAppID: ThicketAppStore.appID))
                     .tint(ThicketPalette.moss(for: scheme))
+            case .core:
+                CorePortfolioDemoView()
             }
         }
     }
@@ -131,6 +141,16 @@ struct SettingsScreen: View {
                     subtitle: String(localized: "Built-in catalog, integrated in one line", comment: "Row subtitle describing the built-in catalog convenience."),
                     symbol: "cup.and.saucer.fill"
                 ) { presentedPortfolio = .slowBrewed }
+
+                Divider()
+                    .overlay(ThicketPalette.hairline(for: scheme))
+                    .padding(.leading, 56)
+
+                portfolioRow(
+                    title: String(localized: "Custom App List", comment: "Row title opening the Core-powered host-owned portfolio example."),
+                    subtitle: String(localized: "Host-owned UI using the Core API", comment: "Row subtitle describing the data-only Core example."),
+                    symbol: "square.stack.3d.up.fill"
+                ) { presentedPortfolio = .core }
             }
         }
     }

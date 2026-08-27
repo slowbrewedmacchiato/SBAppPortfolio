@@ -1,5 +1,5 @@
 //  SBAppStoreApp.swift
-//  SBAppPortfolio
+//  SBAppPortfolioCore
 //
 //  Created by Slow Brewed Studio on 2026-08-18.
 
@@ -10,13 +10,14 @@ import Foundation
 /// All field names match the iTunes Lookup JSON keys exactly. Computed
 /// helpers normalize display values (name, price, subtitle, genre) with
 /// sensible fallbacks.
-public struct SBAppStoreApp: Codable, Identifiable, Sendable {
+public struct SBAppStoreApp: Codable, Identifiable, Sendable, Equatable {
     public let trackId: Int
     public let trackName: String?
     public let trackCensoredName: String?
     public let subtitle: String?
     public let description: String?
     public let artworkUrl100: String?
+    public let artworkUrl512: String?
     public let trackViewUrl: String?
     public let artistName: String?
     public let bundleId: String?
@@ -31,40 +32,77 @@ public struct SBAppStoreApp: Codable, Identifiable, Sendable {
 
     public var id: Int { trackId }
 
-    /// Falls back to "Free" when the App Store omits `formattedPrice`.
+    public init(
+        trackId: Int,
+        trackName: String? = nil,
+        trackCensoredName: String? = nil,
+        subtitle: String? = nil,
+        description: String? = nil,
+        artworkUrl100: String? = nil,
+        artworkUrl512: String? = nil,
+        trackViewUrl: String? = nil,
+        artistName: String? = nil,
+        bundleId: String? = nil,
+        primaryGenreName: String? = nil,
+        genres: [String]? = nil,
+        formattedPrice: String? = nil,
+        price: Double? = nil,
+        averageUserRating: Double? = nil,
+        userRatingCount: Int? = nil,
+        version: String? = nil,
+        releaseDate: String? = nil
+    ) {
+        self.trackId = trackId
+        self.trackName = trackName
+        self.trackCensoredName = trackCensoredName
+        self.subtitle = subtitle
+        self.description = description
+        self.artworkUrl100 = artworkUrl100
+        self.artworkUrl512 = artworkUrl512
+        self.trackViewUrl = trackViewUrl
+        self.artistName = artistName
+        self.bundleId = bundleId
+        self.primaryGenreName = primaryGenreName
+        self.genres = genres
+        self.formattedPrice = formattedPrice
+        self.price = price
+        self.averageUserRating = averageUserRating
+        self.userRatingCount = userRatingCount
+        self.version = version
+        self.releaseDate = releaseDate
+    }
+
+    /// Falls back to an English label when the lookup omits a formatted price.
+    /// Presentation modules can replace this label with their localized copy.
     public var displayPrice: String {
-        formattedPrice ?? String(localized: "Free", bundle: .module, comment: "Fallback price label when App Store lookup omits formatted price.")
+        formattedPrice ?? "Free"
     }
 
     /// Locale-independent signal that the app is free. Based on the numeric
     /// `price` field (0 for free apps) rather than the localized
-    /// `formattedPrice` string ("Free" / "Gratis" / "無料" / etc.), so the
-    /// GET pill renders correctly regardless of `lookupCountry`.
+    /// `formattedPrice` string ("Free" / "Gratis" / "無料" / etc.), so a
+    /// GET pill renders correctly regardless of the requested storefront.
     ///
     /// Some App Store entries omit `price` *and* `formattedPrice` entirely.
     /// A paid app always reports a price, so an entry carrying no price data
-    /// at all is treated as free, otherwise it would render the word "Free"
-    /// beside GET pills for its equally-free siblings in the same list.
+    /// is treated as free.
     public var isFree: Bool {
         if let price { return price == 0 }
         return formattedPrice == nil
     }
 
-    /// Prefers the censored name (used by the App Store in some regions) over
-    /// the raw track name. Falls back to a localized "App" label when both
-    /// are missing so the row never shows an empty title.
+    /// Prefers the censored App Store name over the raw track name.
     public var displayName: String {
-        trackCensoredName ?? trackName ?? String(localized: "App", bundle: .module, comment: "Fallback name label when App Store lookup omits track name.")
+        trackCensoredName ?? trackName ?? "App"
     }
 
-    /// Falls back to the first genre when `primaryGenreName` is missing.
+    /// Falls back to the first genre when the primary genre is absent.
     public var primaryGenre: String {
-        primaryGenreName ?? genres?.first ?? String(localized: "App", bundle: .module, comment: "Fallback genre label for portfolio rows.")
+        primaryGenreName ?? genres?.first ?? "App"
     }
 
-    /// Returns the App Store subtitle when present; otherwise derives a short
-    /// summary from the description (first sentence, or first 120 characters).
-    /// Returns an empty string when both subtitle and description are missing.
+    /// Uses the App Store subtitle when available, then derives a short summary
+    /// from the first description sentence or the first 120 characters.
     public var displaySubtitle: String {
         if let subtitle, !subtitle.isEmpty {
             return subtitle
@@ -87,13 +125,18 @@ public struct SBAppStoreApp: Codable, Identifiable, Sendable {
     }
 
     public var appStoreURL: URL? {
-        guard let trackViewUrl else { return nil }
-        return URL(string: trackViewUrl)
+        trackViewUrl.flatMap(URL.init(string:))
     }
 
+    /// The original 100 pixel artwork URL retained for source compatibility.
     public var artworkURL: URL? {
-        guard let artworkUrl100 else { return nil }
-        return URL(string: artworkUrl100)
+        artworkUrl100.flatMap(URL.init(string:))
+    }
+
+    /// The highest resolution artwork supplied by the lookup response, with a
+    /// fallback to the 100 pixel variant when 512 pixel artwork is unavailable.
+    public var bestArtworkURL: URL? {
+        artworkUrl512.flatMap(URL.init(string:)) ?? artworkURL
     }
 }
 
@@ -101,8 +144,8 @@ public struct SBAppStoreApp: Codable, Identifiable, Sendable {
 ///
 /// Decodes `results` with per-element isolation: a single malformed entry
 /// (missing required field, wrong type, etc.) is dropped rather than failing
-/// the whole batch. This matters for the batched lookup path where one bad
-/// sibling-app payload would otherwise blank the entire sheet.
+/// the whole batch. This matters for a batched lookup where one bad sibling
+/// app payload would otherwise blank the entire result.
 struct SBAppStoreLookupResponse: Codable, Sendable {
     let resultCount: Int
     let results: [SBAppStoreApp]
@@ -124,14 +167,11 @@ struct SBAppStoreLookupResponse: Codable, Sendable {
         var apps: [SBAppStoreApp] = []
         // `superDecoder()` returns a fresh decoder for the current element and
         // advances the iterator, so each element decodes in isolation. A
-        // malformed entry (missing trackId, wrong type, etc.) is dropped via
-        // `try?` rather than failing the whole batch.
+        // malformed entry is dropped via `try?` rather than failing the batch.
         //
-        // Note: do NOT pre-size `apps` from `resultCount`, that field is
-        // attacker-controlled network data. A hostile `resultCount: Int.max`
-        // would trigger a fatal allocation via `reserveCapacity` before the
-        // loop runs, defeating the per-element isolation. Let the array grow
-        // naturally from successfully decoded elements.
+        // Do not pre-size `apps` from `resultCount`: it is untrusted network
+        // data, and a hostile value could cause a fatal allocation before the
+        // isolated decoding loop begins.
         while !unkeyed.isAtEnd {
             let elementDecoder = try unkeyed.superDecoder()
             if let app = try? SBAppStoreApp(from: elementDecoder) {

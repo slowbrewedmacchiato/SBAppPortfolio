@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   package:
-    name: Package
+    name: Package and UI
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v7
@@ -26,11 +26,55 @@ jobs:
           swift -version 2>&1 | grep -qE 'Swift version (6|[7-9])\.' \
             || { echo "::error::Swift 6.0+ required (swift-tools-version 6.0)"; exit 1; }
 
-      - name: Build
-        run: swift build
+      - name: Build Core product
+        run: swift build --target SBAppPortfolioCore
+
+      - name: Build packaged UI product
+        run: swift build --target SBAppPortfolio
 
       - name: Test
         run: swift test
+
+  core-platforms:
+    name: Core · ${{ matrix.name }}
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: iOS 16
+            sdk: iphonesimulator
+            triple: arm64-apple-ios16.0-simulator
+            slug: ios16
+          - name: macOS 11
+            sdk: macosx
+            triple: arm64-apple-macosx11.0
+            slug: macos11
+          - name: watchOS 9
+            sdk: watchsimulator
+            triple: arm64-apple-watchos9.0-simulator
+            slug: watchos9
+          - name: tvOS 16
+            sdk: appletvsimulator
+            triple: arm64-apple-tvos16.0-simulator
+            slug: tvos16
+          - name: visionOS 1
+            sdk: xrsimulator
+            triple: arm64-apple-xros1.0-simulator
+            slug: visionos1
+    steps:
+      - uses: actions/checkout@v7
+
+      # Build only the Foundation target at each declared minimum. The
+      # macos-15 runner's bundled Xcode supplies all five Apple SDK families.
+      - name: Build SBAppPortfolioCore
+        run: |
+          CORE_SDK_PATH="$(xcrun --sdk '${{ matrix.sdk }}' --show-sdk-path)"
+          swift build \
+            --target SBAppPortfolioCore \
+            --triple '${{ matrix.triple }}' \
+            --sdk "$CORE_SDK_PATH" \
+            --scratch-path "$RUNNER_TEMP/sbappportfolio-${{ matrix.slug }}"
 
   example:
     name: Example app

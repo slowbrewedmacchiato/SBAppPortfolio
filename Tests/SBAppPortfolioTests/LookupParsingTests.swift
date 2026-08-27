@@ -6,6 +6,7 @@
 import Testing
 import Foundation
 @testable import SBAppPortfolio
+@testable import SBAppPortfolioCore
 
 @Suite("Lookup decoding")
 struct LookupParsingTests {
