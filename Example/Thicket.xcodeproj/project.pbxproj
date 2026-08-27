@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A10000000000000000000002 /* CorePortfolioDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* CorePortfolioDemoView.swift */; };
-		A10000000000000000000004 /* SBAppPortfolioCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000003 /* SBAppPortfolioCore */; };
 		4356A4102C1DC4996BBC2B6C /* ThicketApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1754D05C3FF8B2CAC96B26BC /* ThicketApp.swift */; };
 		63F08E18CB118E01443F3774 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F96C679AF595B13309338E /* SettingsScreen.swift */; };
 		662F6661CB6BC3BD0C0FF700 /* SBAppPortfolio in Frameworks */ = {isa = PBXBuildFile; productRef = 45A8506A74FAD2A983E4A36D /* SBAppPortfolio */; };
 		8749730F1EC9D034DE7C9941 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7B2896DBAD0426CB06D876EA /* Localizable.xcstrings */; };
+		A10000000000000000000002 /* CorePortfolioDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* CorePortfolioDemoView.swift */; };
+		A10000000000000000000004 /* SBAppPortfolioCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000003 /* SBAppPortfolioCore */; };
 		B68C4E83149C2452EA5C3265 /* ThicketTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6F7CFC4313DBCAB4D4A0A6 /* ThicketTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A10000000000000000000001 /* CorePortfolioDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePortfolioDemoView.swift; sourceTree = "<group>"; };
 		1754D05C3FF8B2CAC96B26BC /* ThicketApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThicketApp.swift; sourceTree = "<group>"; };
 		7B2896DBAD0426CB06D876EA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		9B01F1C42E4BB58E9FDA6705 /* Thicket.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Thicket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B01F1C42E4BB58E9FDA6705 /* Thicket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thicket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000001 /* CorePortfolioDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePortfolioDemoView.swift; sourceTree = "<group>"; };
 		BECF869AB61D57F64F1D0B2E /* SBAppPortfolio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SBAppPortfolio; path = ..; sourceTree = SOURCE_ROOT; };
 		CB6F7CFC4313DBCAB4D4A0A6 /* ThicketTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThicketTheme.swift; sourceTree = "<group>"; };
 		F3F96C679AF595B13309338E /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
@@ -322,7 +322,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.slowbrewed.example.thicket;
 				PRODUCT_NAME = Thicket;
 				SDKROOT = iphoneos;
@@ -350,7 +350,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.slowbrewed.example.thicket;
 				PRODUCT_NAME = Thicket;
 				SDKROOT = iphoneos;
