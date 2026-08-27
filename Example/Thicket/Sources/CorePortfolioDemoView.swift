@@ -15,6 +15,7 @@ import SwiftUI
 struct CorePortfolioDemoView: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.openURL) private var openURL
+    @Environment(\.dismiss) private var dismiss
 
     @State private var appsByID: [String: SBAppStoreApp] = [:]
     @State private var isLoading = false
@@ -51,8 +52,18 @@ struct CorePortfolioDemoView: View {
             )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(
+                        String(
+                            localized: "Done",
+                            comment: "Close button for the Core-powered custom portfolio sheet."
+                        )
+                    ) {
+                        dismiss()
+                    }
+                }
                 if isLoading {
-                    ToolbarItem(placement: .primaryAction) {
+                    ToolbarItem(placement: .navigation) {
                         ProgressView()
                     }
                 }
