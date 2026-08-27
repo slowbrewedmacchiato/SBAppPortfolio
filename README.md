@@ -9,7 +9,9 @@
 
 **A SwiftUI "More From Us" sheet for studios that ship more than one app.**
 
-Your users already trust you. This is the screen that tells them what else you make: a settings sheet listing your other apps with their real icons, names, subtitles, and prices, pulled live from the App Store so nothing goes stale when you rename an app or change a price.
+**No hardcoded app lists.** Icons, names, subtitles, genres, and prices are fetched from Apple's iTunes Lookup API at runtime, so your listing is never out of date — rename an app or change its price and every app you ship updates itself.
+
+Your users already trust you. This is the screen that tells them what else you make: a settings sheet listing your other apps with their real icons, names, subtitles, and prices.
 
 The app it runs in excludes itself. The sheet inherits your app's tint instead of imposing its own look. It ships localized and depends on nothing.
 
