@@ -69,3 +69,15 @@ Cancelling the caller cancels the back-deployed URLSession task and throws ``SBA
 Other network, HTTP, response, country, and decoding failures are represented by ``SBAppPortfolioError``. A host-owned portfolio should keep its complete static list visible when these errors occur.
 
 Core is Foundation-only and supports iOS 16, macOS 11, watchOS 9, tvOS 16, and visionOS 1.
+
+## Platform-specific metadata
+
+The default service requests `desktopSoftware` on macOS and `software` on
+other platforms. Universal App Store IDs may share an ID but have different
+Mac and iOS descriptions; `macSoftware` is a search entity and did not select
+the Mac description in the lookup endpoint for Coca. The decoded cache is
+process-local, so results cannot cross between Mac and iOS hosts.
+
+Verified against Apple's German Coca lookup on 2026-09-17: `desktopSoftware`
+returns the Mac sleep-prevention description; `software` returns the iOS
+companion description. No platform filter changes catalog visibility.

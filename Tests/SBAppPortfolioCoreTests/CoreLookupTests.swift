@@ -52,6 +52,38 @@ struct CoreLookupTests {
         #expect(query.first { $0.name == "country" }?.value == "de")
     }
 
+    @Test("Universal app IDs resolve metadata for the host platform")
+    func universalAppUsesHostPlatform() async throws {
+        let session = makeSession { url in
+            let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+                .queryItems?.first { $0.name == "entity" }?.value
+            let description = entity == "desktopSoftware"
+                ? "Keep your Mac awake."
+                : "The iOS companion for your Mac."
+            return try response(
+                for: url,
+                json: """
+                {"resultCount":1,"results":[
+                  {"trackId":1000808993,"description":"\(description)"}
+                ]}
+                """
+            )
+        }
+        defer { CoreStubURLProtocol.handler = nil }
+
+        let service = makeService(session: session)
+        let request = SBAppLookupRequest(appIDs: ["1000808993"], countryCode: "de")
+        let live = try await service.fetchApps(for: request)
+        let cached = try await service.fetchApps(for: request)
+#if os(macOS)
+        #expect(live.apps.first?.description == "Keep your Mac awake.")
+#else
+        #expect(live.apps.first?.description == "The iOS companion for your Mac.")
+#endif
+        #expect(cached.apps == live.apps)
+        #expect(cached.source == .freshCache)
+    }
+
     @Test("Response and display-name ordering remain caller selectable")
     func selectableOrdering() async throws {
         let session = makeSession { url in

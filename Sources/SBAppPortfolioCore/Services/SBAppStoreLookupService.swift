@@ -126,7 +126,7 @@ public struct SBAppStoreLookupService: SBAppStoreLookupClient, Sendable {
         components?.queryItems = [
             URLQueryItem(name: "id", value: ids),
             URLQueryItem(name: "country", value: countryCode),
-            URLQueryItem(name: "entity", value: "software")
+            URLQueryItem(name: "entity", value: Self.lookupEntity)
         ]
 
         guard let url = components?.url else {
@@ -232,6 +232,16 @@ public struct SBAppStoreLookupService: SBAppStoreLookupClient, Sendable {
             source: source,
             countryCode: request.countryCode
         )
+    }
+
+    // Universal App Store IDs can have different iOS and macOS descriptions.
+    // The lookup endpoint needs desktopSoftware (not search's macSoftware).
+    private static var lookupEntity: String {
+#if os(macOS)
+        "desktopSoftware"
+#else
+        "software"
+#endif
     }
 
     static let iTunesLookupBase = "https://itunes.apple.com/lookup"
