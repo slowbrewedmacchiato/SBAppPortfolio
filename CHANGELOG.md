@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- macOS lookups now overlay a second `desktopSoftware` batch onto `software`
+  results, using Mac metadata for universal apps while preserving live
+  metadata for iOS-only apps.
+
 ### Added
 
 - `SBAppPortfolioCore`, a Foundation-only library product for host-owned

@@ -6,8 +6,8 @@
 import Foundation
 
 /// Fetches live App Store metadata through the iTunes Lookup API. A request
-/// sends every App Store ID as one comma-separated batch, so fetching several
-/// sibling apps remains one HTTP call rather than one call per app.
+/// sends every App Store ID as one comma-separated batch. macOS adds a second
+/// batch for desktop metadata; other platforms make one HTTP call.
 ///
 /// Shared-session clients also share the package cache. It survives view
 /// reinitialization and sheet dismissal, preserving the original package's
@@ -121,12 +121,33 @@ public struct SBAppStoreLookupService: SBAppStoreLookupClient, Sendable {
     }
 
     private func loadApps(appIDs: [String], countryCode: String) async throws -> [SBAppStoreApp] {
+        let apps = try await loadApps(appIDs: appIDs, countryCode: countryCode, entity: "software")
+#if os(macOS)
+        // Universal IDs can carry different descriptions for each platform.
+        // desktopSoftware selects Mac metadata; macSoftware is a Search API
+        // entity. Keep the base results because desktopSoftware omits iOS-only apps.
+        try Self.checkCancellation()
+        let desktopApps = try await loadApps(
+            appIDs: appIDs, countryCode: countryCode, entity: "desktopSoftware"
+        )
+        let desktopByID = Dictionary(uniqueKeysWithValues: desktopApps.map { ($0.trackId, $0) })
+        let baseIDs = Set(apps.map(\.trackId))
+        return apps.map { desktopByID[$0.trackId] ?? $0 }
+            + desktopApps.filter { !baseIDs.contains($0.trackId) }
+#else
+        return apps
+#endif
+    }
+
+    private func loadApps(
+        appIDs: [String], countryCode: String, entity: String
+    ) async throws -> [SBAppStoreApp] {
         let ids = appIDs.joined(separator: ",")
         var components = URLComponents(string: Self.iTunesLookupBase)
         components?.queryItems = [
             URLQueryItem(name: "id", value: ids),
             URLQueryItem(name: "country", value: countryCode),
-            URLQueryItem(name: "entity", value: Self.lookupEntity)
+            URLQueryItem(name: "entity", value: entity)
         ]
 
         guard let url = components?.url else {
@@ -232,16 +253,6 @@ public struct SBAppStoreLookupService: SBAppStoreLookupClient, Sendable {
             source: source,
             countryCode: request.countryCode
         )
-    }
-
-    // Universal App Store IDs can have different iOS and macOS descriptions.
-    // The lookup endpoint needs desktopSoftware (not search's macSoftware).
-    private static var lookupEntity: String {
-#if os(macOS)
-        "desktopSoftware"
-#else
-        "software"
-#endif
     }
 
     static let iTunesLookupBase = "https://itunes.apple.com/lookup"

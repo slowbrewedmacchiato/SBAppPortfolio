@@ -72,12 +72,20 @@ Core is Foundation-only and supports iOS 16, macOS 11, watchOS 9, tvOS 16, and v
 
 ## Platform-specific metadata
 
-The default service requests `desktopSoftware` on macOS and `software` on
-other platforms. Universal App Store IDs may share an ID but have different
-Mac and iOS descriptions; `macSoftware` is a search entity and did not select
-the Mac description in the lookup endpoint for Coca. The decoded cache is
-process-local, so results cannot cross between Mac and iOS hosts.
+Every platform requests a `software` batch. On macOS the service also requests
+`desktopSoftware` for the same IDs and overlays those results by `trackId`.
+Universal App Store IDs can carry different iOS and macOS descriptions; the
+desktop result supplies Mac metadata while iOS-only apps retain their live
+base metadata. `macSoftware` is a Search API entity and does not select the
+Mac description on the lookup endpoint.
 
-Verified against Apple's German Coca lookup on 2026-09-17: `desktopSoftware`
-returns the Mac sleep-prevention description; `software` returns the iOS
-companion description. No platform filter changes catalog visibility.
+A network lookup makes two batched requests on macOS and one elsewhere.
+Response ordering follows the base response, with any desktop-only results
+appended in their response order. Caller and display-name ordering still apply
+to the combined result, and `missingAppIDs` includes only IDs absent from both
+responses on macOS.
+
+Only a complete lookup is cached. If either request fails, the existing error
+and stale-cache policy applies; partial base metadata does not replace cached
+Mac metadata. Cancellation still throws without returning stale data. The
+decoded cache is process-local, so results never cross between Mac and iOS hosts.

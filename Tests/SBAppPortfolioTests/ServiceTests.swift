@@ -11,6 +11,14 @@ import os
 
 @Suite("Lookup service", .serialized)
 struct ServiceTests {
+    private var requestsPerLookup: Int {
+#if os(macOS)
+        2
+#else
+        1
+#endif
+    }
+
     private func fixture(_ name: String) throws -> Data {
         let url = try #require(Bundle.module.url(forResource: name, withExtension: "json"))
         return try Data(contentsOf: url)
@@ -209,7 +217,7 @@ struct ServiceTests {
         #expect(counter.withLock { $0 } == 0)
     }
 
-    @Test("Cache hit returns cached apps without a second network call")
+    @Test("Cache hit returns cached apps without another network lookup")
     func cacheHit() async throws {
         let counter = OSAllocatedUnfairLock(initialState: 0)
         let batch = try fixture("lookup_batch")
@@ -231,7 +239,7 @@ struct ServiceTests {
         _ = try await service.fetchApps(for: config) // network
         _ = try await service.fetchApps(for: config) // cache
 
-        #expect(counter.withLock { $0 } == 1)
+        #expect(counter.withLock { $0 } == requestsPerLookup)
     }
 
     @Test("clearCache forces a fresh fetch on next call")
@@ -257,7 +265,7 @@ struct ServiceTests {
         await service.clearCache()
         _ = try await service.fetchApps(for: config) // network again
 
-        #expect(counter.withLock { $0 } == 2)
+        #expect(counter.withLock { $0 } == 2 * requestsPerLookup)
     }
 
     @Test("Shared cache persists across service instances (sheet-dismissal scenario)")
@@ -289,7 +297,7 @@ struct ServiceTests {
         // The Core service rejects unexpected response IDs, so only the app
         // requested by this configuration survives the two-app fixture.
         #expect(apps.count == 1)
-        #expect(counter.withLock { $0 } == 1)
+        #expect(counter.withLock { $0 } == requestsPerLookup)
 
     }
 }
