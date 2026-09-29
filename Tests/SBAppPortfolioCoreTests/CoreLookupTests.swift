@@ -486,11 +486,13 @@ struct CoreLookupTests {
         #expect(requestCount.value == 0)
     }
 
-    @Test("Task cancellation cancels the macOS 11 URLSession bridge", arguments: cancellationEntities)
+    @Test(
+        "Task cancellation cancels the macOS 11 URLSession bridge",
+        .timeLimit(.minutes(1)),
+        arguments: cancellationEntities
+    )
     func cancellationCancelsURLSessionTask(entity: String) async throws {
-        CancellationStubURLProtocol.suspendedEntity.withValue { $0 = entity }
-        CancellationStubURLProtocol.started.withValue { $0 = false }
-        CancellationStubURLProtocol.stopped.withValue { $0 = false }
+        CancellationStubURLProtocol.probe.reset(suspending: entity)
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [CancellationStubURLProtocol.self]
         let service = makeService(session: URLSession(configuration: configuration))
@@ -499,10 +501,9 @@ struct CoreLookupTests {
             try await service.fetchApps(for: SBAppLookupRequest(appIDs: ["1"]))
         }
 
-        for _ in 0..<200 where !CancellationStubURLProtocol.started.value {
-            try await Task.sleep(nanoseconds: 1_000_000)
-        }
-        #expect(CancellationStubURLProtocol.started.value)
+        // Wait on the stub's signals rather than polling for them. A request that
+        // never starts or stops hangs here until the test's time limit reports it.
+        await CancellationStubURLProtocol.probe.waitForStart()
         task.cancel()
 
         do {
@@ -512,7 +513,7 @@ struct CoreLookupTests {
             // Expected: cancellation must not be converted to a network error.
         }
 
-        #expect(CancellationStubURLProtocol.stopped.value)
+        await CancellationStubURLProtocol.probe.waitForStop()
     }
 
     @Test("A pre-cancelled caller cannot receive a fresh cache hit")
@@ -635,30 +636,98 @@ private final class CoreStubURLProtocol: URLProtocol {
 }
 
 private final class CancellationStubURLProtocol: URLProtocol {
-    static let suspendedEntity = Locked("software")
-    static let started = Locked(false)
-    static let stopped = Locked(false)
+    static let probe = CancellationProbe()
 
     override class func canInit(with request: URLRequest) -> Bool { true }
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
-        if let url = request.url,
-           let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
-               .queryItems?.first(where: { $0.name == "entity" })?.value,
-           entity != Self.suspendedEntity.value {
+        if let url = request.url, !isSuspended {
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             client?.urlProtocol(self, didLoad: Data("{\"results\":[{\"trackId\":1}]}".utf8))
             client?.urlProtocolDidFinishLoading(self)
             return
         }
-        Self.started.withValue { $0 = true }
+        Self.probe.markStarted()
     }
 
     override func stopLoading() {
-        Self.stopped.withValue { $0 = true }
+        // URLSession also stops the requests that finished normally, so only the
+        // suspended request's stop counts as the cancellation reaching the transport.
+        if isSuspended { Self.probe.markStopped() }
+    }
+
+    private var isSuspended: Bool {
+        guard let url = request.url else { return true }
+        let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+            .queryItems?.first { $0.name == "entity" }?.value
+        return entity == Self.probe.suspendedEntity
+    }
+}
+
+/// Signals when the suspended request starts and stops, so tests await the event
+/// itself instead of racing a polling deadline. Lock-backed so the URLProtocol
+/// callbacks, which arrive on URLSession's threads, can fire it synchronously.
+private final class CancellationProbe: @unchecked Sendable {
+    private struct Latch {
+        var isSet = false
+        var waiters: [CheckedContinuation<Void, Never>] = []
+    }
+
+    private struct State {
+        var suspendedEntity = "software"
+        var started = Latch()
+        var stopped = Latch()
+    }
+
+    private let lock = NSLock()
+    private var state = State()
+
+    var suspendedEntity: String {
+        lock.withLock { state.suspendedEntity }
+    }
+
+    func reset(suspending entity: String) {
+        lock.withLock { state = State(suspendedEntity: entity) }
+    }
+
+    func markStarted() {
+        fire(\.started)
+    }
+
+    func markStopped() {
+        fire(\.stopped)
+    }
+
+    func waitForStart() async {
+        await wait(\.started)
+    }
+
+    func waitForStop() async {
+        await wait(\.stopped)
+    }
+
+    private func fire(_ latch: WritableKeyPath<State, Latch>) {
+        let waiters: [CheckedContinuation<Void, Never>] = lock.withLock {
+            state[keyPath: latch].isSet = true
+            let waiters = state[keyPath: latch].waiters
+            state[keyPath: latch].waiters.removeAll()
+            return waiters
+        }
+        waiters.forEach { $0.resume() }
+    }
+
+    private func wait(_ latch: WritableKeyPath<State, Latch>) async {
+        await withCheckedContinuation { continuation in
+            let isAlreadySet: Bool = lock.withLock {
+                guard !state[keyPath: latch].isSet else { return true }
+                state[keyPath: latch].waiters.append(continuation)
+                return false
+            }
+            if isAlreadySet { continuation.resume() }
+        }
     }
 }
 
