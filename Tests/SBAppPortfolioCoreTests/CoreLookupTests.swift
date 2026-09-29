@@ -52,6 +52,161 @@ struct CoreLookupTests {
         #expect(query.first { $0.name == "country" }?.value == "de")
     }
 
+    @Test("Platform metadata preserves iOS-only apps in a mixed catalog")
+    func mixedCatalogUsesHostPlatform() async throws {
+        let recorder = Locked<[URL]>([])
+        let session = makeSession { url in
+            recorder.withValue { $0.append(url) }
+            let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+                .queryItems?.first { $0.name == "entity" }?.value
+            let json: String
+            switch entity {
+            case "software":
+                json = """
+                {"results":[
+                  {"trackId":2,"trackName":"Mobile app","description":"Mobile description",
+                   "subtitle":"Mobile subtitle","artworkUrl512":"https://example.com/mobile.png",
+                   "price":2.99,"formattedPrice":"$2.99"},
+                  {"trackId":1,"trackName":"Universal app","description":"Mobile description"}
+                ]}
+                """
+            case "desktopSoftware":
+                json = """
+                {"results":[
+                  {"trackId":3,"trackName":"Desktop app","description":"Desktop-only description"},
+                  {"trackId":1,"trackName":"Universal app","description":"Desktop description"},
+                  {"trackId":1,"description":"Duplicate"},
+                  {"trackId":999,"description":"Unexpected"}
+                ]}
+                """
+            default:
+                Issue.record("Unexpected lookup entity")
+                json = "{\"results\":[]}"
+            }
+            return try response(for: url, json: json)
+        }
+        defer { CoreStubURLProtocol.handler = nil }
+
+        let service = makeService(session: session)
+        let request = SBAppLookupRequest(appIDs: ["1", "2", "3", "4"], countryCode: "de")
+        let live = try await service.fetchApps(for: request)
+        let cached = try await service.fetchApps(for: request)
+        let responseOrder = try await service.fetchApps(
+            for: SBAppLookupRequest(appIDs: ["1", "2", "3", "4"], countryCode: "de", ordering: .response)
+        )
+#if os(macOS)
+        #expect(live.apps.map(\.trackId) == [1, 2, 3])
+        #expect(live.app(forAppID: "1")?.description == "Desktop description")
+        #expect(live.app(forAppID: "3")?.description == "Desktop-only description")
+        #expect(live.missingAppIDs == ["4"])
+        #expect(responseOrder.apps.map(\.trackId) == [2, 1, 3])
+#else
+        #expect(live.apps.map(\.trackId) == [1, 2])
+        #expect(live.app(forAppID: "1")?.description == "Mobile description")
+        #expect(live.missingAppIDs == ["3", "4"])
+        #expect(responseOrder.apps.map(\.trackId) == [2, 1])
+#endif
+        let mobile = try #require(live.app(forAppID: "2"))
+        #expect(mobile.description == "Mobile description")
+        #expect(mobile.subtitle == "Mobile subtitle")
+        #expect(mobile.bestArtworkURL?.absoluteString == "https://example.com/mobile.png")
+        #expect(mobile.price == 2.99)
+        #expect(mobile.formattedPrice == "$2.99")
+        #expect(live.source == .network)
+        #expect(cached.apps == live.apps)
+        #expect(cached.missingAppIDs == live.missingAppIDs)
+        #expect(cached.source == .freshCache)
+        #expect(responseOrder.source == .freshCache)
+        let queries = recorder.value.compactMap {
+            URLComponents(url: $0, resolvingAgainstBaseURL: false)?.queryItems
+        }
+        #expect(queries.count == requestsPerLookup)
+        #expect(queries.allSatisfy { $0.first { $0.name == "id" }?.value == "1,2,3,4" })
+        #expect(queries.allSatisfy { $0.first { $0.name == "country" }?.value == "de" })
+        let entities = queries.compactMap { $0.first { $0.name == "entity" }?.value }
+#if os(macOS)
+        #expect(entities == ["software", "desktopSoftware"])
+#else
+        #expect(entities == ["software"])
+#endif
+    }
+
+#if os(macOS)
+    @Test("An empty desktop result preserves all base metadata")
+    func emptyDesktopResultPreservesBase() async throws {
+        let session = makeSession { url in
+            let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+                .queryItems?.first { $0.name == "entity" }?.value
+            return try response(for: url, json: entity == "desktopSoftware"
+                ? "{\"results\":[]}"
+                : "{\"results\":[{\"trackId\":1,\"description\":\"Mobile description\"}]}")
+        }
+        defer { CoreStubURLProtocol.handler = nil }
+        let result = try await makeService(session: session).fetchApps(
+            for: SBAppLookupRequest(appIDs: ["1"])
+        )
+        #expect(result.app(forAppID: "1")?.description == "Mobile description")
+        #expect(result.missingAppIDs.isEmpty)
+    }
+
+    @Test("A failed desktop request cannot cache partial base metadata")
+    func failedDesktopRequestDoesNotPopulateCache() async throws {
+        let baseRequests = Locked(0)
+        let session = makeSession { url in
+            let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+                .queryItems?.first { $0.name == "entity" }?.value
+            if entity == "desktopSoftware" { throw URLError(.notConnectedToInternet) }
+            baseRequests.withValue { $0 += 1 }
+            return try response(for: url, json: "{\"results\":[{\"trackId\":1}]}")
+        }
+        defer { CoreStubURLProtocol.handler = nil }
+        let service = makeService(session: session)
+        for _ in 0..<2 {
+            await #expect(throws: SBAppPortfolioError.self) {
+                _ = try await service.fetchApps(for: SBAppLookupRequest(appIDs: ["1"]))
+            }
+        }
+        #expect(baseRequests.value == 2)
+    }
+
+    @Test("Desktop refresh errors respect stale fallback", arguments: [true, false])
+    func desktopRefreshRespectsStaleFallback(allowsStale: Bool) async throws {
+        let currentDate = Locked(Date(timeIntervalSince1970: 1_000))
+        let failDesktop = Locked(false)
+        let session = makeSession { url in
+            let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+                .queryItems?.first { $0.name == "entity" }?.value
+            if entity == "desktopSoftware", failDesktop.value {
+                throw URLError(.notConnectedToInternet)
+            }
+            let description = entity == "desktopSoftware" ? "Desktop description" : "Mobile description"
+            return try response(for: url, json: """
+                {"results":[{"trackId":1,"description":"\(description)"}]}
+                """)
+        }
+        defer { CoreStubURLProtocol.handler = nil }
+        let service = SBAppStoreLookupService(
+            urlSession: session, cache: SBAppStoreLookupCache(),
+            cachePolicy: SBAppLookupCachePolicy(timeToLive: 10, allowsStaleDataOnError: allowsStale),
+            now: { currentDate.value }
+        )
+        let request = SBAppLookupRequest(appIDs: ["1"])
+        let initial = try await service.fetchApps(for: request)
+        currentDate.withValue { $0 = $0.addingTimeInterval(11) }
+        failDesktop.withValue { $0 = true }
+        if allowsStale {
+            let stale = try await service.fetchApps(for: request)
+            #expect(stale.source == .staleCache)
+            #expect(stale.apps == initial.apps)
+            #expect(stale.app(forAppID: "1")?.description == "Desktop description")
+        } else {
+            await #expect(throws: SBAppPortfolioError.self) {
+                _ = try await service.fetchApps(for: request)
+            }
+        }
+    }
+#endif
+
     @Test("Response and display-name ordering remain caller selectable")
     func selectableOrdering() async throws {
         let session = makeSession { url in
@@ -110,7 +265,7 @@ struct CoreLookupTests {
 
         #expect(reversed.apps.map(\.trackId) == [2, 1])
         #expect(reversed.source == .freshCache)
-        #expect(requestCount.value == 1)
+        #expect(requestCount.value == requestsPerLookup)
     }
 
     @Test("Public clients with a custom URLSession do not share decoded metadata")
@@ -129,7 +284,7 @@ struct CoreLookupTests {
         _ = try await SBAppStoreLookupService(urlSession: session).fetchApps(for: request)
         _ = try await SBAppStoreLookupService(urlSession: session).fetchApps(for: request)
 
-        #expect(requestCount.value == 2)
+        #expect(requestCount.value == 2 * requestsPerLookup)
     }
 
     @Test("The disabled cache policy neither reads nor writes decoded metadata")
@@ -161,7 +316,7 @@ struct CoreLookupTests {
         let second = try await cached.fetchApps(for: request)
 
         #expect(second.source == .network)
-        #expect(requestCount.value == 2)
+        #expect(requestCount.value == 2 * requestsPerLookup)
     }
 
     @Test("Invalidation prevents an older in-flight generation from repopulating cache")
@@ -212,7 +367,7 @@ struct CoreLookupTests {
 
         #expect(firstAgain.source == .network)
         #expect(secondAgain.source == .freshCache)
-        #expect(requestCount.value == 3)
+        #expect(requestCount.value == 3 * requestsPerLookup)
     }
 
     @Test("Expired metadata is returned as stale when a refresh fails")
@@ -224,7 +379,7 @@ struct CoreLookupTests {
                 count += 1
                 return count
             }
-            if attempt == 1 {
+            if attempt <= requestsPerLookup {
                 return try response(
                     for: url,
                     json: "{\"resultCount\":1,\"results\":[{\"trackId\":1,\"trackName\":\"Cached\"}]}"
@@ -252,7 +407,7 @@ struct CoreLookupTests {
         #expect(initial.source == .network)
         #expect(stale.source == .staleCache)
         #expect(stale.apps.map(\.displayName) == ["Cached"])
-        #expect(requestCount.value == 2)
+        #expect(requestCount.value == requestsPerLookup + 1)
     }
 
     @Test("Disabled stale fallback surfaces refresh errors")
@@ -264,7 +419,7 @@ struct CoreLookupTests {
                 count += 1
                 return count
             }
-            if attempt == 1 {
+            if attempt <= requestsPerLookup {
                 return try response(
                     for: url,
                     json: "{\"resultCount\":1,\"results\":[{\"trackId\":1,\"trackName\":\"Cached\"}]}"
@@ -331,8 +486,9 @@ struct CoreLookupTests {
         #expect(requestCount.value == 0)
     }
 
-    @Test("Task cancellation cancels the macOS 11 URLSession bridge")
-    func cancellationCancelsURLSessionTask() async throws {
+    @Test("Task cancellation cancels the macOS 11 URLSession bridge", arguments: cancellationEntities)
+    func cancellationCancelsURLSessionTask(entity: String) async throws {
+        CancellationStubURLProtocol.suspendedEntity.withValue { $0 = entity }
         CancellationStubURLProtocol.started.withValue { $0 = false }
         CancellationStubURLProtocol.stopped.withValue { $0 = false }
         let configuration = URLSessionConfiguration.ephemeral
@@ -402,6 +558,22 @@ struct CoreLookupTests {
         #expect(fallback.bestArtworkURL?.absoluteString == "https://example.com/100.png")
     }
 
+    private static var cancellationEntities: [String] {
+#if os(macOS)
+        ["software", "desktopSoftware"]
+#else
+        ["software"]
+#endif
+    }
+
+    private var requestsPerLookup: Int {
+#if os(macOS)
+        2
+#else
+        1
+#endif
+    }
+
     private func makeService(session: URLSession) -> SBAppStoreLookupService {
         SBAppStoreLookupService(
             urlSession: session,
@@ -463,6 +635,7 @@ private final class CoreStubURLProtocol: URLProtocol {
 }
 
 private final class CancellationStubURLProtocol: URLProtocol {
+    static let suspendedEntity = Locked("software")
     static let started = Locked(false)
     static let stopped = Locked(false)
 
@@ -471,6 +644,16 @@ private final class CancellationStubURLProtocol: URLProtocol {
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
+        if let url = request.url,
+           let entity = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+               .queryItems?.first(where: { $0.name == "entity" })?.value,
+           entity != Self.suspendedEntity.value {
+            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            client?.urlProtocol(self, didLoad: Data("{\"results\":[{\"trackId\":1}]}".utf8))
+            client?.urlProtocolDidFinishLoading(self)
+            return
+        }
         Self.started.withValue { $0 = true }
     }
 
