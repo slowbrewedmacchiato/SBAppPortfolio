@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   results, using Mac metadata for universal apps while preserving live
   metadata for iOS-only apps.
 
+## [1.1.0] - 2026-08-27
+
 ### Added
 
 - `SBAppPortfolioCore`, a Foundation-only library product for host-owned
@@ -87,5 +89,6 @@ First tagged release.
 - `Example/Thicket`, a themed example app demonstrating both configuration
   paths, light and dark, and localization.
 
-[Unreleased]: https://github.com/slowbrewedmacchiato/SBAppPortfolio/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/slowbrewedmacchiato/SBAppPortfolio/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/slowbrewedmacchiato/SBAppPortfolio/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/slowbrewedmacchiato/SBAppPortfolio/releases/tag/1.0.0
